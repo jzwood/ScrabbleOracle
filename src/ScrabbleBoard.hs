@@ -1,0 +1,54 @@
+module ScrabbleBoard where
+
+import Data.Matrix
+
+newtype Tile = Tile (Char, Int)
+  deriving (Show, Eq)
+data Bonus = TripleWordScore | DoubleWordScore | TripleLetterScore | DoubleLetterScore
+  deriving (Show, Eq)
+newtype Square = Square (Maybe Tile, Maybe Bonus)
+  deriving (Show, Eq)
+type Board = Matrix Square
+
+newtype TileCoordinate = Coordinate (Int, Int)
+  deriving (Show, Eq)
+type WordPlacement = [TileCoordinate]
+
+coordinateToTile :: Board -> TileCoordinate -> Maybe Square
+coordinateToTile board (Coordinate (x, y)) = safeGet x y board
+
+hasChar :: Maybe Square -> Bool
+hasChar (Just (Square (Just (Tile _), _))) = True
+hasChar _ = False
+
+hasBonus :: Maybe Square -> Bool
+hasBonus (Just (Square (_, Just _))) = True
+hasBonus _ = False
+
+charToValue = [ ('*', 0),
+                ('A', 1),
+                ('B', 3),
+                ('C', 3),
+                ('D', 2),
+                ('E', 1),
+                ('F', 4),
+                ('G', 2),
+                ('H', 4),
+                ('I', 1),
+                ('J', 8),
+                ('K', 5),
+                ('L', 1),
+                ('M', 3),
+                ('N', 1),
+                ('O', 1),
+                ('P', 3),
+                ('Q', 10),
+                ('R', 1),
+                ('S', 1),
+                ('T', 1),
+                ('U', 1),
+                ('V', 4),
+                ('W', 4),
+                ('X', 8),
+                ('Y', 4),
+                ('Z', 10) ]
