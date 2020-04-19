@@ -21,7 +21,12 @@ description:         Please see the README on GitHub at <https://github.com/gith
 
 dependencies:
 - base >= 4.7 && < 5
-- bytestring-trie >= 0.2.5
+- containers >= 0.6.2.1
+- matrix >= 0.3.6.1
+- unordered-containers >= 0.2.10.0
+#- bytestring >= 0.10.10.0
+#- bytestring-trie >= 0.2.5.0
+#- utf8-string >= 1.0.1.1
 
 library:
   source-dirs: src

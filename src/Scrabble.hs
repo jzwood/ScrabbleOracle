@@ -1,7 +1,6 @@
 module Scrabble where
 
 import Data.Matrix
-import qualified Data.Vector as V
 import Data.List (genericLength)
 import ScrabbleBoard
 

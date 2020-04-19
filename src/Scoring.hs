@@ -1,7 +1,8 @@
 module Scoring where
 
-import Board
+import ScrabbleBoard (Board, WordPlacement)
 
-type Integer = Score
+type Score = Integer
 
 scoreWordPlacement :: WordPlacement -> Board -> Score
+scoreWordPlacement _ _ = 9

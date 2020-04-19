@@ -1,0 +1,37 @@
+module PreprocessOld where
+
+import Data.List (sortOn)
+import Control.Exception
+import System.Directory (doesDirectoryExist, createDirectory)
+
+
+dictPath = "dicts/collins_scrabble_words2019.txt"
+
+
+createDirIfDoesNotExist :: String -> IO Bool
+createDirIfDoesNotExist dirName = do
+  dirExist <- doesDirectoryExist dirName
+  if not dirExist
+     then createDirectory dirName >> pure True
+   else return False
+
+doIfFileDoesNotExist :: String -> IO () -> IO Bool
+doIfFileDoesNotExist fileName = do
+  dirExist <- doesDirectoryExist dirName
+  if not dirExist
+     then createDirectory dirName >> pure True
+   else return False
+
+--sortOnIndex :: Integer -> [a] -> [a]
+--sortOnIndex i xs = sortOn (\w -> )
+
+createCustomSortedDictionaries :: wordLength -> IO Bool
+createCustomSortedDictionaries wordLength = do
+  dict <- readFile dictPath
+  dictWords = filter (\w -> length w == wordLength) $ words dict
+  indices = [(i1, i2) | i1 <- [1..(wordLength - 1)], i2 <- [1..(wordLength - 1)], i1 /= i2]
+
+
+
+
+main = createDirIfDoesNotExist "precomputed"

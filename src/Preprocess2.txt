@@ -1,0 +1,57 @@
+module Preprocess where
+
+
+--import Data.ByteString.Lazy as BL
+--import qualified Data.List as L
+--import Data.ByteString.UTF8 (ByteString)
+import Data.HashSet (HashSet)
+import Data.Trie (Trie)
+
+import qualified Data.ByteString.Lazy as BL
+import qualified Data.ByteString.Lazy.UTF8 as BLU
+import qualified Data.ByteString.UTF8 as BU
+import qualified Data.HashSet as Set
+import qualified Data.List as L
+import qualified Data.Trie as T
+import qualified System.IO as FS
+
+
+
+
+
+dictPath = "dicts/collins_scrabble_words2019.txt"
+
+
+
+dictHashSet :: IO (HashSet BLU.ByteString)
+dictHashSet = do
+  fileContent <- FS.readFile dictPath
+  let byteWordList = L.map BLU.fromString $ L.words fileContent
+  return $ Set.fromList byteWordList
+
+initTrie :: [(Integer, String)] -> Trie Integer
+initTrie kstrs = T.fromList $ L.map (\(k, s) -> (BU.fromString s, k)) kstrs
+
+w = BLU.fromString "CAT"
+
+partialW =
+  [ "AC__"
+  , "A__"
+  , "C_T"
+  , "C__STS"
+  ]
+rack = "ACTSO"
+
+explore :: Trie k -> BLU.ByteString -> [(k, BLU.ByteString)]
+explore trie rack | T.null trie || BL.null rack = []
+explore trie rack = T.foldr ()
+
+it = initTrie $ zip [0..] partialW
+wo = BU.fromString "AC__"
+wo2 = BU.fromString "AC__X"
+
+main :: IO ()
+main = do
+  d <- dictHashSet
+  --Prelude.putStr . show $ Set.member w d
+  Prelude.putStr . show $ it
