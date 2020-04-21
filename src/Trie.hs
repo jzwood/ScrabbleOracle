@@ -10,6 +10,9 @@ data Trie k v = Node (Maybe v) (Map k (Trie k v))
 empty :: (Ord k) => Trie k v
 empty = Node Nothing M.empty
 
+null :: (Ord k, Eq v) => Trie k v -> Bool
+null = (==Trie.empty)
+
 insert :: (Ord k) => [k] -> v -> Trie k v -> Trie k v
 insert [] v (Node _ map) = Node (Just v) map
 insert (x:xs) v (Node v' map)
