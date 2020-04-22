@@ -1,0 +1,8 @@
+partialW =
+  [ "AC__"
+  , "A__"
+  , "C_T"
+  , "C__STS"
+  ]
+
+rack = "ACTSO"

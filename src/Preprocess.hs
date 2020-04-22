@@ -28,19 +28,6 @@ dictHashSet = do
 --initTrie kstrs = T.fromList kstrs
 
 
-partialW =
-  [ "AC__"
-  , "A__"
-  , "C_T"
-  , "C__STS"
-  ]
-rack = "ACTSO"
-
---insert :: (Ord k) => [k] -> v -> Trie k v -> Trie k v
---insert [] v (Node _ map) = Node (Just v) map
---insert (x:xs) v (Node v' map)
-  -- | x `M.member` map = Node v' (M.adjust (Trie.insert xs v) x map)
-  -- | otherwise = Node v' (M.insert x (Trie.insert xs v Trie.empty) map)
 
 explore :: Trie Char i -> Rack -> [i]
 explore (T.Node Nothing m) _ | M.null m = []
@@ -52,18 +39,34 @@ explore (T.Node Nothing m) rack = exploreWildMap ++ exploreCharMap
     exploreWildMap =  concatMap (\(_, t) -> concatMap (explore t) subracks) ktPairsWild
     exploreCharMap = concatMap (\(k, t) -> explore t rack) ktPairsChar
 
-    --(charmap, wildmap) = M.partitionWithKey (\k _ -> k /= wildcardChar) m
-    --vs1 = concatMap (\(k, t) -> explore t rack) (M.assocs charmap)
-    --vs2 = if M.null wildmap
-          --then concatMap (explore (M.! wildcardChar wildmap)) $ subracks rack
-          --else []
+explore' :: Trie Char v -> Rack -> [Char] -> [([Char], v)]
+explore' (T.Node Nothing m)  _ _  | M.null m = []
+explore' (T.Node (Just v) m) _ acc | M.null m = [(acc, v)]
+explore' (T.Node Nothing m) rack word = exploreWildMap ++ exploreCharMap
+  where
+    (wildTries, charTries) = L.partition ((==wildcardChar) . fst) (M.assocs m)
+    subracks = nub $ map (\r -> (r, rack\\[r])) rack
+    exploreWildMap =  concatMap (\(_, t) -> concatMap (\(c, cs) -> explore' t cs (c : word)) subracks) wildTries
+    exploreCharMap = concatMap (\(c, t) -> explore' t rack (c: word)) charTries
 
---it = initTrie $ zip [0..] partialW
-wo = "AC__"
-wo2 ="AC__X"
+partialW =
+  [ "AC__"
+  , "A__"
+  , "C_T"
+  , "C__STS"
+  ]
+rack = "ACTSO"
+it = T.fromList $ zip partialW [0..]
+e = explore' it rack []
+e' :: [String]
+e' = map (\(word, i) -> reverse word) e
+
+final :: [String] -> IO [String]
+final words = do
+  dict <- dictHashSet
+  return $ filter (`Set.member` dict) words
 
 main :: IO ()
 main = do
-  d <- dictHashSet
-  --Prelude.putStr . show $ Set.member w d
-  Prelude.putStr . show $ 4
+  res <- final e'
+  Prelude.putStr . show $ res

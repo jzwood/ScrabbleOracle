@@ -1,0 +1,13 @@
+partialW =
+  [ "AC__"
+  , "A__"
+  , "C_T"
+  , "C__STS"
+  ]
+rack = "ACTSO"
+
+[("CAA",1),("TAA",1),("SAA",1),("OAA",1),("ACA",1),("TCA",1),("SCA",1),("OCA",1),("ATA",1),("CTA",1),("STA",1),("OTA",1),("ASA",1),("CSA",1),("TSA",1),("OSA",1),("AOA",1),("COA",1),("TOA",1),("SOA",1),("CACA",0),("TACA",0),("SACA",0),("OACA",0),("ACCA",0),("TCCA",0),("SCCA",0),("OCCA",0),("ATCA",0),("CTCA",0),("STCA",0),("OTCA",0),("ASCA",0),("CSCA",0),("TSCA",0),("OSCA",0),("AOCA",0),("COCA",0),("TOCA",0),("SOCA",0),("STSCAC",3),("STSTAC",3),("STSSAC",3),("STSOAC",3),("TAC",2),("STSACC",3),("STSTCC",3),("STSSCC",3),("STSOCC",3)
+	,("TCC",2),("STSATC",3),("STSCTC",3),("STSSTC",3),("STSOTC",3),("TTC",2),("STSASC",3),("STSCSC",3),("STSTSC",3),("STSOSC",3),("TSC",2),("STSAOC",3),("STSCOC",3),("STSTOC",3),("STSSOC",3),("TOC",2)]
+
+
+["AAC","AAT","AAS","AAO","ACA","ACT","ACS","ACO","ATA","ATC","ATS","ATO","ASA","ASC","AST","ASO","AOA","AOC","AOT","AOS","ACAC","ACAT","ACAS","ACAO","ACCA","ACCT","ACCS","ACCO","ACTA","ACTC","ACTS","ACTO","ACSA","ACSC","ACST","ACSO","ACOA","ACOC","ACOT","ACOS","CACSTS","CATSTS","CASSTS","CAOSTS","CAT","CCASTS","CCTSTS","CCSSTS","CCOSTS","CCT","CTASTS","CTCSTS","CTSSTS","CTOSTS","CTT","CSASTS","CSCSTS","CSTSTS","CSOSTS","CST","COASTS","COCSTS","COTSTS","COSSTS","COT"]
