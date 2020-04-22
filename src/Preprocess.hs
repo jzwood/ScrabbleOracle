@@ -39,7 +39,7 @@ explore (T.Node Nothing m) rack = exploreWildMap ++ exploreCharMap
     exploreWildMap =  concatMap (\(_, t) -> concatMap (explore t) subracks) ktPairsWild
     exploreCharMap = concatMap (\(k, t) -> explore t rack) ktPairsChar
 
-explore' :: Trie Char v -> Rack -> [Char] -> [([Char], v)]
+explore' :: Trie Char v -> Rack -> String -> [(String, v)]
 explore' (T.Node Nothing m)  _ _  | M.null m = []
 explore' (T.Node (Just v) m) _ acc | M.null m = [(acc, v)]
 explore' (T.Node Nothing m) rack word = exploreWildMap ++ exploreCharMap

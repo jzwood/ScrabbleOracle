@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: cdac806e0c4084cecaf99fa3d4ced18106631f1065ad6b42b224e985af9b926f
+-- hash: de634803e4cac86d36d0bf3ca9983c3e9df7ac69b9c64a84541ffbffd209be23
 
 name:           scrabble-oracle
 version:        0.1.0.0
@@ -29,6 +29,7 @@ library
   exposed-modules:
       Lib
       Preprocess
+      ProcessPartialStrings
       Scoring
       Scrabble
       ScrabbleBoard
