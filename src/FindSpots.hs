@@ -1,0 +1,40 @@
+module FindSpots where
+
+import Data.Matrix
+import Data.List (genericLength)
+import ScrabbleBoard
+
+type AdjacencyMapping = Matrix Bool
+wordSizes = [2..9]
+
+exhaustivePlacements :: Board -> [WordPlacement]
+exhaustivePlacements board = horizontalWords ++ verticalWords
+  where
+    rows = nrows board
+    cols = ncols board
+    getHWords ws = [[ Coordinate (c + x, r) | x <- [0..(ws - 1)] ] | r <- [0..(rows - 1)], c <- [0..(cols - ws)]]
+    getVWords ws = [[ Coordinate (c, r + y) | y <- [0..(ws - 1)] ] | c <- [0..(cols - 1)], r <- [0..(rows - ws)]]
+    horizontalWords = concatMap getHWords wordSizes
+    verticalWords = concatMap getVWords wordSizes
+
+calcAdjacencies :: Board -> AdjacencyMapping
+calcAdjacencies board =
+  let
+    isAdjacent:: (Int, Int) -> Square -> Bool
+    isAdjacent _ (Square (Just (Tile _), _ )) = False
+    isAdjacent (r, c) _ = any (hasChar . (\(x, y) -> safeGet x y board))
+      [
+        (r, c + 1), (r - 1, c), (r + 1, c), (r, c - 1)
+      ]
+  in
+    mapPos isAdjacent board
+
+findPlayableSpots :: Board -> [WordPlacement]
+findPlayableSpots board = filter isValidPlacement $ exhaustivePlacements board
+  where
+    adjacenciesMatrix = calcAdjacencies board
+    isValidPlacement :: WordPlacement -> Bool
+    isValidPlacement wordPlacements = includesAdjacentSquare && includesEmptySquare
+      where
+        includesAdjacentSquare = any (\(Coordinate xy) -> adjacenciesMatrix ! xy) wordPlacements
+        includesEmptySquare = not (all (hasChar . coordinateToTile board) wordPlacements)

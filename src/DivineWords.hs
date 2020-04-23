@@ -1,4 +1,4 @@
-module ProcessPartialStrings where
+module DivineWords where
 
 import Data.HashSet (HashSet)
 import Data.List
@@ -7,11 +7,14 @@ import qualified Data.HashSet as Set
 import qualified Data.List as L
 import qualified Data.Map.Lazy as M
 import qualified System.IO as FS
+
 import Trie (Trie)
 import qualified Trie as T
+import ScrabbleBoard
 
 type Rack = String
 type Dictionary = HashSet String
+type PlaySpot = (String, [WordPlacement])
 
 dictPath = "dicts/collins_scrabble_words2019.txt"
 wildcardChar = '_'
@@ -22,7 +25,7 @@ dictHashSet = do
   let wordList = L.words fileContent
   return $ Set.fromList wordList
 
-exploreTrie :: Trie Char v -> Rack -> String -> [(String, v)]
+exploreTrie :: Trie Char [WordPlacement] -> Rack -> String -> [PlaySpot]
 exploreTrie (T.Node Nothing m)  _ _  | M.null m = []
 exploreTrie (T.Node (Just v) m) _ acc | M.null m = [(reverse acc, v)]
 exploreTrie (T.Node Nothing m) rack word = exploreWildMap ++ exploreCharMap
@@ -32,24 +35,9 @@ exploreTrie (T.Node Nothing m) rack word = exploreWildMap ++ exploreCharMap
     exploreWildMap =  concatMap (\(_, t) -> concatMap (\(c, cs) -> exploreTrie t cs (c : word)) subracks) wildTries
     exploreCharMap = concatMap (\(c, t) -> exploreTrie t rack (c: word)) charTries
 
-processPartialWords :: Rack -> [String] -> IO [(String, Integer)]
-processPartialWords rack partialWords = do
-  dict <- dictHashSet
-  return $ filter (\(x, y) -> x `Set.member` dict) lettersToVal
-    where
-      trie = T.fromList $ zip partialWords [0..]
+findPlayableWords :: Rack -> [PlaySpot] -> IO [PlaySpot]
+findPlayableWords rack associationStrings  = do
+  let trie = T.fromList associationStrings
       lettersToVal = exploreTrie trie rack []
-
-
-partialWords =
-  [ "AC__"
-  , "A__"
-  , "C_T"
-  , "C__STS"
-  ]
-rack = "ACTSO"
-
-main :: IO ()
-main = do
-  res <- processPartialWords rack partialWords
-  Prelude.putStr . show $ res
+  dict <- dictHashSet
+  return $ filter (\(x, _) -> x `Set.member` dict) lettersToVal
