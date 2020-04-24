@@ -1,6 +1,5 @@
-module DivineWords where
+module PlaySpots where
 
-import Data.HashSet (HashSet)
 import Data.List
 
 import qualified Data.HashSet as Set
@@ -12,18 +11,15 @@ import Trie (Trie)
 import qualified Trie as T
 import ScrabbleBoard
 
-type Rack = String
-type Dictionary = HashSet String
-type PlaySpot = (String, [WordPlacement])
-
 dictPath = "dicts/collins_scrabble_words2019.txt"
 wildcardChar = '_'
 
-dictHashSet :: IO Dictionary
-dictHashSet = do
+isInDictionary :: IO (String -> Bool)
+isInDictionary = do
   fileContent <- FS.readFile dictPath
   let wordList = L.words fileContent
-  return $ Set.fromList wordList
+      dictionary = Set.fromList wordList
+  return (`Set.member` dictionary)
 
 exploreTrie :: Trie Char [WordPlacement] -> Rack -> String -> [PlaySpot]
 exploreTrie (T.Node Nothing m)  _ _  | M.null m = []
@@ -35,9 +31,9 @@ exploreTrie (T.Node Nothing m) rack word = exploreWildMap ++ exploreCharMap
     exploreWildMap =  concatMap (\(_, t) -> concatMap (\(c, cs) -> exploreTrie t cs (c : word)) subracks) wildTries
     exploreCharMap = concatMap (\(c, t) -> exploreTrie t rack (c: word)) charTries
 
-findPlayableWords :: Rack -> [PlaySpot] -> IO [PlaySpot]
-findPlayableWords rack associationStrings  = do
+findPlaySpots :: Rack -> [PlaySpot] -> IO [PlaySpot]
+findPlaySpots rack associationStrings  = do
   let trie = T.fromList associationStrings
-      lettersToVal = exploreTrie trie rack []
-  dict <- dictHashSet
-  return $ filter (\(x, _) -> x `Set.member` dict) lettersToVal
+      playSpots = exploreTrie trie rack []
+  isWord <- isInDictionary
+  return $ filter (isWord . fst) playSpots

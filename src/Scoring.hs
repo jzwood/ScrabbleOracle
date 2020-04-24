@@ -4,5 +4,6 @@ import ScrabbleBoard (Board, WordPlacement)
 
 type Score = Integer
 
-scoreWordPlacement :: WordPlacement -> Board -> Score
-scoreWordPlacement _ _ = 9
+placementToScore :: Board -> String -> WordPlacement -> Score
+placementToScore = undefined
+

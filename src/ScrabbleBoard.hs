@@ -14,6 +14,9 @@ newtype TileCoordinate = Coordinate (Int, Int)
   deriving (Show, Eq)
 type WordPlacement = [TileCoordinate]
 
+type Rack = String
+type PlaySpot = (String, [WordPlacement])
+
 coordinateToTile :: Board -> TileCoordinate -> Maybe Square
 coordinateToTile board (Coordinate (x, y)) = safeGet x y board
 

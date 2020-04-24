@@ -1,4 +1,4 @@
-module FindSpots where
+module Placements where
 
 import Data.Matrix
 import Data.List (genericLength)
@@ -29,8 +29,8 @@ calcAdjacencies board =
   in
     mapPos isAdjacent board
 
-findPlayableSpots :: Board -> [WordPlacement]
-findPlayableSpots board = filter isValidPlacement $ exhaustivePlacements board
+findPlacements :: Board -> [WordPlacement]
+findPlacements board = filter isValidPlacement $ exhaustivePlacements board
   where
     adjacenciesMatrix = calcAdjacencies board
     isValidPlacement :: WordPlacement -> Bool
@@ -38,3 +38,6 @@ findPlayableSpots board = filter isValidPlacement $ exhaustivePlacements board
       where
         includesAdjacentSquare = any (\(Coordinate xy) -> adjacenciesMatrix ! xy) wordPlacements
         includesEmptySquare = not (all (hasChar . coordinateToTile board) wordPlacements)
+
+placementToSpot :: Board -> WordPlacement -> PlaySpot
+placementToSpot _ _ = ("", [])

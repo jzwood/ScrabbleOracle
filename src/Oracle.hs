@@ -1,38 +1,19 @@
 module Oracle where
 
-import DivineWords (findPlayableWords)
+import Placements
+import Scoring
 import ScrabbleBoard
+import PlaySpots
 
-testBoard1 = fromLists
-  [
-    [Square (Nothing, Nothing), Square (Nothing, Nothing), Square (Nothing, Nothing)],
-    [Square (Nothing, Nothing), Square (Just (Tile ('k', 0)), Nothing), Square (Nothing, Nothing)],
-    [Square (Nothing, Nothing), Square (Just (Tile ('l', 0)), Nothing), Square (Nothing, Nothing)]
-  ]
+oracle :: Board -> Rack -> IO [(WordPlacement, Score)]
+oracle board rack = do
+  let placements :: [WordPlacement]
+      placements = findPlacements board
+      spots :: [PlaySpot]
+      spots = map placementToSpot placements
+  playSpots <- findPlaySpots rack spots
+  let score = placementToScore playSpots
 
-
-testBoard2 = fromLists
-  [
-    [Square (Nothing, Nothing), Square (Nothing, Nothing)],
-    [Square (Nothing, Nothing), Square (Just (Tile ('k', 0)), Nothing)]
-  ]
-
-
-main :: IO ()
-main =
-  --putStr . show $ calcAdjacencies testBoard1
-  putStr . show $ exhaustivePlacements testBoard1
-
-
-partialWords =
-  [ "AC__"
-  , "A__"
-  , "C_T"
-  , "C__STS"
-  ]
-wordPlacements = [[Coordinate (0,0)]]
-associationStrings = map (\w -> (w, wordPlacements)) partialWords
-rack = "ACTSO"
 
 main :: IO ()
 main = do
