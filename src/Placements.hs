@@ -39,5 +39,5 @@ findPlacements board = filter isValidPlacement $ exhaustivePlacements board
         includesAdjacentSquare = any (\(Coordinate xy) -> adjacenciesMatrix ! xy) wordPlacements
         includesEmptySquare = not (all (hasChar . coordinateToTile board) wordPlacements)
 
-placementToSpot :: Board -> WordPlacement -> PlaySpot
-placementToSpot _ _ = ("", [])
+toPlaySpotCandidate :: Board -> WordPlacement -> (String, [WordPlacement])
+toPlaySpotCandidate = undefined
