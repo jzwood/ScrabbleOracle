@@ -1,6 +1,8 @@
 module ScrabbleBoard where
 
 import Data.Matrix
+import Data.Maybe (fromMaybe)
+import ScrabbleBoard (Score)
 
 newtype Tile = Tile (Char, Int)
   deriving (Show, Eq)
@@ -17,8 +19,20 @@ type WordPlacement = [TileCoordinate]
 type Rack = String
 type PlaySpot = (String, [WordPlacement])
 
-coordinateToTile :: Board -> TileCoordinate -> Maybe Square
-coordinateToTile board (Coordinate (x, y)) = safeGet x y board
+coordinateToSquare :: Board -> TileCoordinate -> Maybe Square
+coordinateToSquare board (Coordinate (x, y)) = safeGet x y board
+
+unsafeCoordinateToSquare :: Board -> TileCoordinate -> Square
+unsafeCoordinateToSquare board (Coordinate (x, y)) = getElem x y board
+
+squareToTile :: Square -> Tile
+squareToTile (Square (tile, _)) = fromMaybe (Tile ('_', 0)) tile
+
+tileToChar :: Tile -> Char
+tileToChar (Tile (c, _)) = c
+
+tileToScore :: Tile -> Score
+tileToScore (Tile (_, s)) = s
 
 hasChar :: Maybe Square -> Bool
 hasChar (Just (Square (Just (Tile _), _))) = True

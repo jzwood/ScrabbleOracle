@@ -1,6 +1,7 @@
 module Placements where
 
 import Data.Matrix
+import Data.Maybe
 import Data.List (genericLength)
 import ScrabbleBoard
 
@@ -37,7 +38,10 @@ findPlacements board = filter isValidPlacement $ exhaustivePlacements board
     isValidPlacement wordPlacements = includesAdjacentSquare && includesEmptySquare
       where
         includesAdjacentSquare = any (\(Coordinate xy) -> adjacenciesMatrix ! xy) wordPlacements
-        includesEmptySquare = not (all (hasChar . coordinateToTile board) wordPlacements)
+        includesEmptySquare = not (all (hasChar . coordinateToSquare board) wordPlacements)
 
-toPlaySpotCandidate :: Board -> WordPlacement -> (String, [WordPlacement])
-toPlaySpotCandidate = undefined
+toPlaySpotCandidate :: Board -> WordPlacement -> (String, WordPlacement)
+toPlaySpotCandidate board placement = (map (tileToChar . squareToTile . unsafeCoordinateToSquare board) placement, placement)
+
+groupCandidates :: [(String, WordPlacement)] -> [(String, [WordPlacement])]
+groupCandidates = undefined

@@ -6,4 +6,3 @@ type Score = Integer
 
 placementToScore :: Board -> String -> WordPlacement -> Score
 placementToScore = undefined
-

@@ -9,9 +9,11 @@ oracle :: Board -> Rack -> IO [(WordPlacement, Score)]
 oracle board rack = do
   let placements :: [WordPlacement]
       placements = findPlacements board
-      playSpotCandidates :: [(String, [WordPlacement])]
+      playSpotCandidates :: [(String, WordPlacement)]
       playSpotCandidates = map toPlaySpotCandidate placements
-  playSpots <- findPlaySpots rack playSpotCandidates
+      groupedCandidates :: [(String, [WordPlacement])]
+      groupedCandidates = groupCandidates playSpotCandidates
+  playSpots <- findPlaySpots rack groupedCandidates
   let scoredPlacements :: [(WordPlacement, Score)]
       scoredPlacements = concatMap (\(word, placements) -> map ((,) word . placementToScore board word) placements) playSpots
   return []
