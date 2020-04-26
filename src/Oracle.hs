@@ -16,7 +16,7 @@ oracle board rack = do
   playSpots <- findPlaySpots rack groupedCandidates
   let scoredPlacements :: [(WordPlacement, Score)]
       scoredPlacements = concatMap (\(word, placements) -> map ((,) word . placementToScore board word) placements) playSpots
-  return []
+  return scoredPlacements
 
 
 main :: IO ()

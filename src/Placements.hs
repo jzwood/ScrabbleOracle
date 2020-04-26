@@ -2,7 +2,7 @@ module Placements where
 
 import Data.Matrix
 import Data.Maybe
-import Data.List (genericLength)
+import Data.List (genericLength, groupBy, sortOn)
 import ScrabbleBoard
 
 type AdjacencyMapping = Matrix Bool
@@ -44,4 +44,8 @@ toPlaySpotCandidate :: Board -> WordPlacement -> (String, WordPlacement)
 toPlaySpotCandidate board placement = (map (tileToChar . squareToTile . unsafeCoordinateToSquare board) placement, placement)
 
 groupCandidates :: [(String, WordPlacement)] -> [(String, [WordPlacement])]
-groupCandidates = undefined
+groupCandidates candidates = map fold' $ group' $ sort' candidates
+  where
+    sort' = sortOn fst
+    group' = groupBy (\(a, _) (b, _) -> a == b)
+    fold' = foldr (\(k, v) (_, v') -> (k, v : v')) ('_', [])
