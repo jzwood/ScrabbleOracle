@@ -31,9 +31,6 @@ squareToTile (Square (tile, _)) = fromMaybe (Tile ('_', 0)) tile
 tileToChar :: Tile -> Char
 tileToChar (Tile (c, _)) = c
 
-tileToScore :: Tile -> Score
-tileToScore (Tile (_, s)) = s
-
 hasChar :: Maybe Square -> Bool
 hasChar (Just (Square (Just (Tile _), _))) = True
 hasChar _ = False
@@ -41,6 +38,8 @@ hasChar _ = False
 hasBonus :: Maybe Square -> Bool
 hasBonus (Just (Square (_, Just _))) = True
 hasBonus _ = False
+
+boardSize = 15
 
 charToValue = [ ('*', 0),
                 ('A', 1),
