@@ -1,6 +1,6 @@
 module Main where
 
-import Lib
+import Oracle
 
 main :: IO ()
-main = someFunc
+main = oracle [] "CATS"

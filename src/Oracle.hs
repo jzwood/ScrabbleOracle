@@ -1,25 +1,27 @@
 module Oracle where
 
-import Placements
+import Data.List (sortOn)
+
+import Discovery
+import AllPlaySpots
 import Scoring
 import ScrabbleBoard
-import PlaySpots
 
-oracle :: Board -> Rack -> IO [(WordPlacement, Score)]
+oracle :: Board -> Rack -> IO [(PlaySpot, Score)]
 oracle board rack = do
-  let placements :: [WordPlacement]
-      placements = findPlacements board
-      playSpotCandidates :: [(String, WordPlacement)]
-      playSpotCandidates = map toPlaySpotCandidate placements
-      groupedCandidates :: [(String, [WordPlacement])]
-      groupedCandidates = groupCandidates playSpotCandidates
-  playSpots <- findPlaySpots rack groupedCandidates
-  let scoredPlacements :: [(WordPlacement, Score)]
-      scoredPlacements = concatMap (\(word, placements) -> map ((,) word . placementToScore board word) placements) playSpots
-  return scoredPlacements
-
+  let playSpots :: [PlaySpot]
+      playSpots = findPlaySpots board
+      playSpotsWithFragments :: [(WordFragment, PlaySpot)]
+      playSpotsWithFragments = map (getFragment board) playSpots
+      wordSpotsGroupedByFragment :: [(WordFragment, [PlaySpot])]
+      wordSpotsGroupedByFragment = groupWordSpotsByFragment playSpotsWithFragments
+      playSpotsGroupedByWord :: [(WordFragment, [PlaySpot])]
+      playSpotsGroupedByWord = fragsToWords rack wordSpotsGroupedByFragment
+  -- validPlaySpotsWithWords :: IO [(String, PlaySpot)]
+  validPlaySpotsWithWords <- validateGroupedPlaySpots playSpotsGroupedByWord
+  return $ sortOn (negate . snd) $ map (score board) validPlaySpotsWithWords
 
 main :: IO ()
 main = do
-  res <- findPlayableWords rack associationStrings
+  res <- oracle [] "CAT"
   Prelude.putStr . show $ res

@@ -2,9 +2,8 @@ module ScrabbleBoard where
 
 import Data.Matrix
 import Data.Maybe (fromMaybe)
-import ScrabbleBoard (Score)
 
-newtype Tile = Tile (Char, Int)
+newtype Tile = Tile (Char, Integer)
   deriving (Show, Eq)
 data Bonus = TripleWordScore | DoubleWordScore | TripleLetterScore | DoubleLetterScore
   deriving (Show, Eq)
@@ -14,10 +13,11 @@ type Board = Matrix Square
 
 newtype TileCoordinate = Coordinate (Int, Int)
   deriving (Show, Eq)
-type WordPlacement = [TileCoordinate]
 
+type PlaySpot = [TileCoordinate]
+type WordFragment = String
 type Rack = String
-type PlaySpot = (String, [WordPlacement])
+type Score = Integer
 
 coordinateToSquare :: Board -> TileCoordinate -> Maybe Square
 coordinateToSquare board (Coordinate (x, y)) = safeGet x y board
@@ -38,8 +38,6 @@ hasChar _ = False
 hasBonus :: Maybe Square -> Bool
 hasBonus (Just (Square (_, Just _))) = True
 hasBonus _ = False
-
-boardSize = 15
 
 charToValue = [ ('*', 0),
                 ('A', 1),
