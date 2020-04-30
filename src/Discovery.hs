@@ -3,6 +3,8 @@
 module Discovery where
 
 import Data.List
+import Data.Tuple
+import Data.Maybe
 
 import qualified Data.HashSet as Set
 import qualified Data.List as L
@@ -14,7 +16,6 @@ import qualified Trie as T
 import ScrabbleBoard
 
 dictPath = "dicts/collins_scrabble_words2019.txt"
-wildcardChar = '_'
 
 isInDictionary :: IO (String -> Bool)
 isInDictionary = do
@@ -36,20 +37,34 @@ searchTrie (T.Node Nothing m) rack word = exploreWildMap ++ exploreCharMap
 fragsToWords :: Rack -> [(WordFragment, [PlaySpot])] -> [(String, [PlaySpot])]
 fragsToWords rack fragmentPlaySpots = searchTrie (T.fromList fragmentPlaySpots) rack []
 
-getCrossWords :: (String, PlaySpot) -> [String]
-getCrossWords (word, playspot) = undefined
+getCrossPlaySpot :: Board -> (Int, Int) -> Char -> TileCoordinate -> (String, [Square])
+getCrossPlaySpot board (vx, vy) c tile = (crossWord, crossSquares)
+  where
+    iter :: (Int, Int) -> [TileCoordinate]
+    iter (vx, vy) = iterate (\(Coordinate (x, y)) -> Coordinate (x + vx, y + vy)) tile
+    coordinatesToSquares :: [TileCoordinate] -> [Square]
+    coordinatesToSquares infTiles = catMaybes $ takeWhile isJust $ map (coordinateToSquare board) infTiles
+    backwards = reverse $ coordinatesToSquares $ iter (vx, vy)
+    forwards = coordinatesToSquares $ iter (-vx, -vy)
+    crossSquares = reverse backwards ++ tail forwards
+    crossWord = map (tileToChar . squareToTile c) crossSquares
+
+getCrossPlaySpots :: Board -> (String, PlaySpot) -> [(String, [Square])]
+getCrossPlaySpots board (word, playSpot) = zipWith (getCrossPlaySpot board xVector) word playSpot
+  where
+    xVector = swap $ toVector (head playSpot) (playSpot !! 1)  -- all words are at least 2 chars long
 
 expandPlaySpots :: [(String, [PlaySpot])] -> [(String, PlaySpot)]
 expandPlaySpots = concatMap (\(s, pss) -> map (s,) pss)
 
 -- collect cross words and filter additionally by their validity
-validateGroupedPlaySpots :: [(String, [PlaySpot])] -> IO [(String, PlaySpot)]
-validateGroupedPlaySpots wordPlaySpots  = do
+validateGroupedPlaySpots :: Board -> [(String, [PlaySpot])] -> IO [(String, PlaySpot)]
+validateGroupedPlaySpots board wordPlaySpots  = do
   isWord <- isInDictionary
   let playSpotsGroupedByValidWord :: [(String, [PlaySpot])]
       playSpotsGroupedByValidWord = filter (isWord . fst) wordPlaySpots
       playSpotsWithValidWord :: [(String, PlaySpot)]
       playSpotsWithValidWord = expandPlaySpots playSpotsGroupedByValidWord
       validPlaySpotWithWord :: [(String, PlaySpot)]
-      validPlaySpotWithWord = filter (all isWord . getCrossWords) playSpotsWithValidWord
+      validPlaySpotWithWord = filter (all (isWord . fst) . getCrossPlaySpots board) playSpotsWithValidWord
   return validPlaySpotWithWord

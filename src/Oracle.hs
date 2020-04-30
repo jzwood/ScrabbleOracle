@@ -18,7 +18,7 @@ oracle board rack = do
       playSpotsGroupedByWord :: [(WordFragment, [PlaySpot])]
       playSpotsGroupedByWord = fragsToWords rack wordSpotsGroupedByFragment
   -- validPlaySpotsWithWords :: IO [(String, PlaySpot)]
-  validPlaySpotsWithWords <- validateGroupedPlaySpots playSpotsGroupedByWord
+  validPlaySpotsWithWords <- validateGroupedPlaySpots board playSpotsGroupedByWord
   return $ sortOn (negate . snd) $ map (score board) validPlaySpotsWithWords
 
 main :: IO ()

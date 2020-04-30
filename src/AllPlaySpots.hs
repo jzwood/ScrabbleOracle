@@ -49,7 +49,7 @@ findPlaySpots board = filter isValidPlaySpot $ allPlaySpots board
         includesEmptySquare = not (all (hasChar . coordinateToSquare board) playSpots)
 
 getFragment :: Board -> PlaySpot -> (WordFragment, PlaySpot)
-getFragment board playSpot = (map (tileToChar . squareToTile . unsafeCoordinateToSquare board) playSpot, playSpot)
+getFragment board playSpot = (map (tileToChar . squareToTile wildcardChar . unsafeCoordinateToSquare board) playSpot, playSpot)
 
 groupWordSpotsByFragment :: [(WordFragment, PlaySpot)] -> [(WordFragment, [PlaySpot])]
 groupWordSpotsByFragment fragmentWordSpots = map fold' $ group' $ sort' fragmentWordSpots

@@ -22,11 +22,14 @@ type Score = Integer
 coordinateToSquare :: Board -> TileCoordinate -> Maybe Square
 coordinateToSquare board (Coordinate (x, y)) = safeGet x y board
 
+toVector :: TileCoordinate -> TileCoordinate -> (Int, Int)
+toVector (Coordinate (x1, y1)) (Coordinate (x2, y2)) = (x2 - x1, y2 - y1)
+
 unsafeCoordinateToSquare :: Board -> TileCoordinate -> Square
 unsafeCoordinateToSquare board (Coordinate (x, y)) = getElem x y board
 
-squareToTile :: Square -> Tile
-squareToTile (Square (tile, _)) = fromMaybe (Tile ('_', 0)) tile
+squareToTile :: Char -> Square -> Tile
+squareToTile defaultChar (Square (tile, _)) = fromMaybe (Tile (defaultChar, 0)) tile
 
 tileToChar :: Tile -> Char
 tileToChar (Tile (c, _)) = c
@@ -39,6 +42,7 @@ hasBonus :: Maybe Square -> Bool
 hasBonus (Just (Square (_, Just _))) = True
 hasBonus _ = False
 
+wildcardChar = '_'
 charToValue = [ ('*', 0),
                 ('A', 1),
                 ('B', 3),
