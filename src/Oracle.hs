@@ -7,17 +7,17 @@ import AllPlaySpots
 import Scoring
 import ScrabbleBoard
 
-oracle :: Board -> Rack -> IO [(PlaySpot, Score)]
+oracle :: Board -> RackLetters -> IO [(Coords, Score)]
 oracle board rack = do
-  let playSpots :: [PlaySpot]
+  let playSpots :: [Coords]
       playSpots = findPlaySpots board
-      playSpotsWithFragments :: [(WordFragment, PlaySpot)]
+      playSpotsWithFragments :: [(WordFragment, Coords)]
       playSpotsWithFragments = map (getFragment board) playSpots
-      wordSpotsGroupedByFragment :: [(WordFragment, [PlaySpot])]
+      wordSpotsGroupedByFragment :: [(WordFragment, [Coords])]
       wordSpotsGroupedByFragment = groupWordSpotsByFragment playSpotsWithFragments
-      playSpotsGroupedByWord :: [(WordFragment, [PlaySpot])]
+      playSpotsGroupedByWord :: [(WordFragment, [Coords])]
       playSpotsGroupedByWord = fragsToWords rack wordSpotsGroupedByFragment
-  -- validPlaySpotsWithWords :: IO [(String, PlaySpot)]
+  -- validPlaySpotsWithWords :: IO [(String, Coords)]
   validPlaySpotsWithWords <- validateGroupedPlaySpots board playSpotsGroupedByWord
   return $ sortOn (negate . snd) $ map (score board) validPlaySpotsWithWords
 

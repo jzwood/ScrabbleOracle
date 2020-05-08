@@ -10,7 +10,7 @@ boardSize = 15
 wordSizes = [2..15]
 
 
-allPlaySpots :: Board -> [PlaySpot]
+allPlaySpots :: Board -> [Coords]
 allPlaySpots board = horizontalWords ++ verticalWords
   where
     rows = nrows board
@@ -38,20 +38,20 @@ getAdjacencies board =
   in
     mapPos isAdjacent board
 
-findPlaySpots :: Board -> [PlaySpot]
+findPlaySpots :: Board -> [Coords]
 findPlaySpots board = filter isValidPlaySpot $ allPlaySpots board
   where
     adjacencies = getAdjacencies board
-    isValidPlaySpot :: PlaySpot -> Bool
+    isValidPlaySpot :: Coords -> Bool
     isValidPlaySpot playSpots = includesAdjacentSquare && includesEmptySquare
       where
         includesAdjacentSquare = any (\(Coordinate xy) -> adjacencies ! xy) playSpots
         includesEmptySquare = not (all (hasChar . coordinateToSquare board) playSpots)
 
-getFragment :: Board -> PlaySpot -> (WordFragment, PlaySpot)
+getFragment :: Board -> Coords -> (WordFragment, Coords)
 getFragment board playSpot = (map (tileToChar . squareToTile wildcardChar . unsafeCoordinateToSquare board) playSpot, playSpot)
 
-groupWordSpotsByFragment :: [(WordFragment, PlaySpot)] -> [(WordFragment, [PlaySpot])]
+groupWordSpotsByFragment :: [(WordFragment, Coords)] -> [(WordFragment, [Coords])]
 groupWordSpotsByFragment fragmentWordSpots = map fold' $ group' $ sort' fragmentWordSpots
   where
     sort' = sortOn fst

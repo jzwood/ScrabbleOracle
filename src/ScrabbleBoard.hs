@@ -14,9 +14,11 @@ type Board = Matrix Square
 newtype TileCoordinate = Coordinate (Int, Int)
   deriving (Show, Eq)
 
-type PlaySpot = [TileCoordinate]
+type Coords = [TileCoordinate]
 type WordFragment = String
-type Rack = String
+type Rack = [Tile]
+type Squares = [Square]
+type RackLetters = String
 type Score = Integer
 
 coordinateToSquare :: Board -> TileCoordinate -> Maybe Square
