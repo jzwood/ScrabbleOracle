@@ -24,7 +24,7 @@ isInDictionary = do
       dictionary = Set.fromList wordList
   return (`Set.member` dictionary)
 
-searchTrie :: Trie Char [Coords] -> RackLetters -> WordFragment -> [(String, [Coords])]
+searchTrie :: Trie Char [Coords] -> String -> WordFragment -> [(String, [Coords])]
 searchTrie (T.Node Nothing m)  _ _  | M.null m = []
 searchTrie (T.Node (Just v) m) _ acc | M.null m = [(reverse acc, v)]
 searchTrie (T.Node Nothing m) rack word = exploreWildMap ++ exploreCharMap
@@ -34,11 +34,11 @@ searchTrie (T.Node Nothing m) rack word = exploreWildMap ++ exploreCharMap
     exploreWildMap =  concatMap (\(_, t) -> concatMap (\(c, cs) -> searchTrie t cs (c : word)) subracks) wildTries
     exploreCharMap = concatMap (\(c, t) -> searchTrie t rack (c: word)) charTries
 
-fragsToWords :: RackLetters -> [(WordFragment, [Coords])] -> [(String, [Coords])]
-fragsToWords rack fragmentPlaySpots = searchTrie (T.fromList fragmentPlaySpots) rack []
+fillFrags :: String -> [(WordFragment, [Coords])] -> [(String, [Coords])]
+fillFrags rackLetters fragmentPlayspots = searchTrie (T.fromList fragmentPlayspots) rackLetters []
 
-getCrossPlaySpot :: Board -> (Int, Int) -> Char -> TileCoordinate -> (String, [Square])
-getCrossPlaySpot board (vx, vy) c tile = (crossWord, crossSquares)
+getCrossPlayspot :: Board -> (Int, Int) -> Char -> TileCoordinate -> (String, [Square])
+getCrossPlayspot board (vx, vy) c tile = (crossWord, crossSquares)
   where
     iter :: (Int, Int) -> [TileCoordinate]
     iter (vx, vy) = iterate (\(Coordinate (x, y)) -> Coordinate (x + vx, y + vy)) tile
@@ -49,22 +49,22 @@ getCrossPlaySpot board (vx, vy) c tile = (crossWord, crossSquares)
     crossSquares = reverse backwards ++ tail forwards
     crossWord = map (tileToChar . squareToTile c) crossSquares
 
-getCrossPlaySpots :: Board -> (String, Coords) -> [(String, [Square])]
-getCrossPlaySpots board (word, playSpot) = zipWith (getCrossPlaySpot board xVector) word playSpot
+getCrossPlayspots :: Board -> (String, Coords) -> [(String, [Square])]
+getCrossPlayspots board (word, playspot) = zipWith (getCrossPlayspot board xVector) word playspot
   where
-    xVector = swap $ toVector (head playSpot) (playSpot !! 1)  -- all words are at least 2 chars long
+    xVector = swap $ toVector (head playspot) (playspot !! 1)  -- all words are at least 2 chars long
 
-expandPlaySpots :: [(String, [Coords])] -> [(String, Coords)]
-expandPlaySpots = concatMap (\(s, pss) -> map (s,) pss)
+expandPlayspots :: [(String, [Coords])] -> [(String, Coords)]
+expandPlayspots = concatMap (\(s, pss) -> map (s,) pss)
 
 -- collect cross words and filter additionally by their validity
-validateGroupedPlaySpots :: Board -> [(String, [Coords])] -> IO [(String, Coords)]
-validateGroupedPlaySpots board wordPlaySpots  = do
+validateGroupedPlayspots :: Board -> [(String, [Coords])] -> IO [(String, Coords)]
+validateGroupedPlayspots board wordPlayspots  = do
   isWord <- isInDictionary
-  let playSpotsGroupedByValidWord :: [(String, [Coords])]
-      playSpotsGroupedByValidWord = filter (isWord . fst) wordPlaySpots
-      playSpotsWithValidWord :: [(String, Coords)]
-      playSpotsWithValidWord = expandPlaySpots playSpotsGroupedByValidWord
-      validPlaySpotWithWord :: [(String, Coords)]
-      validPlaySpotWithWord = filter (all (isWord . fst) . getCrossPlaySpots board) playSpotsWithValidWord
-  return validPlaySpotWithWord
+  let playspotsGroupedByValidWord :: [(String, [Coords])]
+      playspotsGroupedByValidWord = filter (isWord . fst) wordPlayspots
+      playspotsWithValidWord :: [(String, Coords)]
+      playspotsWithValidWord = expandPlayspots playspotsGroupedByValidWord
+      validPlayspotWithWord :: [(String, Coords)]
+      validPlayspotWithWord = filter (all (isWord . fst) . getCrossPlayspots board) playspotsWithValidWord
+  return validPlayspotWithWord

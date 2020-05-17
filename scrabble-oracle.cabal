@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 256743b575620db55c4233bd638d1935c531d06dc0ca749efaeedc01753030c6
+-- hash: 0fffcd9d7301d347fa618bc3eb6cb93250d1e8a06d56f73ab0528bbcca73cbbe
 
 name:           scrabble-oracle
 version:        0.1.0.0
@@ -27,9 +27,9 @@ source-repository head
 
 library
   exposed-modules:
-      AllPlaySpots
       Discovery
       Oracle
+      Playspots
       Scoring
       ScrabbleBoard
       Trie

@@ -17,7 +17,7 @@ scoreWord = undefined
 --type Coords = [TileCoordinate]
 --newtype Square = Square (Maybe Tile, Maybe Bonus)
 --(a -> b -> (a,c)) -> a -> [b] -> (a,[c])
---getCrossPlaySpots :: Board -> (String, Coords) -> [(String, [Square])]
+--getCrossPlayspots :: Board -> (String, Coords) -> [(String, [Square])]
 
 scoreTile :: (Score -> Score) -> (Tile, Square) -> (Score -> Score, Score)
 scoreTile multiplier (Tile (_, value), Square (Nothing, bonus))

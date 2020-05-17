@@ -16,13 +16,15 @@ newtype TileCoordinate = Coordinate (Int, Int)
 
 type Coords = [TileCoordinate]
 type WordFragment = String
+-- newtype WordFragment = Frag String
 type Rack = [Tile]
-type Squares = [Square]
-type RackLetters = String
 type Score = Integer
 
 coordinateToSquare :: Board -> TileCoordinate -> Maybe Square
 coordinateToSquare board (Coordinate (x, y)) = safeGet x y board
+
+toLetters :: Rack -> String
+toLetters = map (\(Tile (c, _)) -> c)
 
 toVector :: TileCoordinate -> TileCoordinate -> (Int, Int)
 toVector (Coordinate (x1, y1)) (Coordinate (x2, y2)) = (x2 - x1, y2 - y1)
@@ -45,7 +47,7 @@ hasBonus (Just (Square (_, Just _))) = True
 hasBonus _ = False
 
 wildcardChar = '_'
-charToValue = [ ('*', 0),
+charToValue = [ (wildcardChar, 0),
                 ('A', 1),
                 ('B', 3),
                 ('C', 3),

@@ -1,4 +1,4 @@
-module AllPlaySpots where
+module Playspots where
 
 import Data.Matrix
 import Data.Maybe
@@ -10,8 +10,8 @@ boardSize = 15
 wordSizes = [2..15]
 
 
-allPlaySpots :: Board -> [Coords]
-allPlaySpots board = horizontalWords ++ verticalWords
+playspotCoords :: Board -> [Coords]
+playspotCoords board = horizontalWords ++ verticalWords
   where
     rows = nrows board
     cols = ncols board
@@ -38,21 +38,21 @@ getAdjacencies board =
   in
     mapPos isAdjacent board
 
-findPlaySpots :: Board -> [Coords]
-findPlaySpots board = filter isValidPlaySpot $ allPlaySpots board
+legalPlayspotCoords :: Board -> [Coords]
+legalPlayspotCoords board = filter isValidPlayspot $ playspotCoords board
   where
     adjacencies = getAdjacencies board
-    isValidPlaySpot :: Coords -> Bool
-    isValidPlaySpot playSpots = includesAdjacentSquare && includesEmptySquare
+    isValidPlayspot :: Coords -> Bool
+    isValidPlayspot playspots = includesAdjacentSquare && includesEmptySquare
       where
-        includesAdjacentSquare = any (\(Coordinate xy) -> adjacencies ! xy) playSpots
-        includesEmptySquare = not (all (hasChar . coordinateToSquare board) playSpots)
+        includesAdjacentSquare = any (\(Coordinate xy) -> adjacencies ! xy) playspots
+        includesEmptySquare = not (all (hasChar . coordinateToSquare board) playspots)
 
 getFragment :: Board -> Coords -> (WordFragment, Coords)
-getFragment board playSpot = (map (tileToChar . squareToTile wildcardChar . unsafeCoordinateToSquare board) playSpot, playSpot)
+getFragment board playspot = (map (tileToChar . squareToTile wildcardChar . unsafeCoordinateToSquare board) playspot, playspot)
 
-groupWordSpotsByFragment :: [(WordFragment, Coords)] -> [(WordFragment, [Coords])]
-groupWordSpotsByFragment fragmentWordSpots = map fold' $ group' $ sort' fragmentWordSpots
+groupCoordsByFragment :: [(WordFragment, Coords)] -> [(WordFragment, [Coords])]
+groupCoordsByFragment fragmentWordSpots = map fold' $ group' $ sort' fragmentWordSpots
   where
     sort' = sortOn fst
     group' = groupBy (\(a, _) (b, _) -> a == b)
