@@ -27,8 +27,3 @@ oracle board rack = do
   -- validPlayspotsWithWords :: IO [(String, Coords)]
   validPlayspotsWithWords <- validateGroupedPlayspots board coordsGroupedByStr
   return $ sortOn (negate . snd) $ map (score board) validPlayspotsWithWords
-
-main :: IO ()
-main = do
-  res <- oracle [] "CAT"
-  Prelude.putStr . show $ res

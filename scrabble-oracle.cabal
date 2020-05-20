@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 0fffcd9d7301d347fa618bc3eb6cb93250d1e8a06d56f73ab0528bbcca73cbbe
+-- hash: a43a4389fa00a168562156925775bc795a1a43883f2bf3da2221d9bf425d6b0b
 
 name:           scrabble-oracle
 version:        0.1.0.0
@@ -32,6 +32,7 @@ library
       Playspots
       Scoring
       ScrabbleBoard
+      TestData
       Trie
   other-modules:
       Paths_scrabble_oracle
@@ -63,6 +64,7 @@ test-suite scrabble-oracle-test
   type: exitcode-stdio-1.0
   main-is: Spec.hs
   other-modules:
+      TestPlayspots
       Paths_scrabble_oracle
   hs-source-dirs:
       test

@@ -25,9 +25,9 @@ isInDictionary = do
   return (`Set.member` dictionary)
 
 searchTrie :: Trie Char [Coords] -> String -> WordFragment -> [(String, [Coords])]
+searchTrie (T.Node (Just v) m) _ word | M.null m = [(reverse word, v)]
 searchTrie (T.Node Nothing m)  _ _  | M.null m = []
-searchTrie (T.Node (Just v) m) _ acc | M.null m = [(reverse acc, v)]
-searchTrie (T.Node Nothing m) rack word = exploreWildMap ++ exploreCharMap
+searchTrie (T.Node _ m) rack word = exploreWildMap ++ exploreCharMap
   where
     (wildTries, charTries) = L.partition ((==wildcardChar) . fst) (M.assocs m)
     subracks = nub $ map (\r -> (r, rack\\[r])) rack

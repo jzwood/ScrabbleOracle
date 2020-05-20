@@ -4,7 +4,7 @@ import Data.List (mapAccumR)
 import ScrabbleBoard
 
 score :: Board -> (String, Coords) -> (Coords, Score)
-score = undefined
+score board (s, c)= (c, 1) -- @TODO
 
 tileToScore :: Tile -> Score
 tileToScore (Tile (a, s)) = s
