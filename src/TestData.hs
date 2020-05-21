@@ -9,8 +9,8 @@ testBoard1 = fromLists
   [
     [eSquare, eSquare,                                eSquare],
     [eSquare, eSquare,                                eSquare],
-    [eSquare, Square (Just (Tile ('r', 0)), Nothing), eSquare],
-    [eSquare, Square (Just (Tile ('e', 0)), Nothing), eSquare]
+    [eSquare, Square (Just (Tile ('R', 0)), Nothing), eSquare],
+    [eSquare, Square (Just (Tile ('E', 0)), Nothing), eSquare]
   ]
 
-testRack1 = [Tile ('a', 1), Tile ('c', 1), Tile ('w', 4)]
+testRack1 = [Tile ('A', 1), Tile ('C', 1), Tile ('W', 4)]

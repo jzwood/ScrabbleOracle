@@ -45,11 +45,11 @@ getCrossPlayspot board (vx, vy) c tile = (crossWord, crossSquares)
     coordinatesToSquares infTiles = catMaybes $ takeWhile isJust $ map (coordinateToSquare board) infTiles
     backwards = reverse $ coordinatesToSquares $ iter (vx, vy)
     forwards = coordinatesToSquares $ iter (-vx, -vy)
-    crossSquares = reverse backwards ++ tail forwards
+    crossSquares = init backwards ++ tail forwards
     crossWord = map (tileToChar . squareToTile c) crossSquares
 
 getCrossPlayspots :: Board -> (String, Coords) -> [(String, [Square])]
-getCrossPlayspots board (word, playspot) = zipWith (getCrossPlayspot board xVector) word playspot
+getCrossPlayspots board (word, playspot) = filter ((>1) . length . fst) $ zipWith (getCrossPlayspot board xVector) word playspot
   where
     xVector = swap $ toVector (head playspot) (playspot !! 1)  -- all words are at least 2 chars long
 
