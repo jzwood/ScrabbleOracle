@@ -3,6 +3,7 @@ module Main where
 import Oracle
 import Data.Matrix (fromLists)
 import ScrabbleBoard
+import TestData
 
 --newtype Tile = Tile (Char, Integer)
   --deriving (Show, Eq)
@@ -11,18 +12,6 @@ import ScrabbleBoard
 --newtype Square = Square (Maybe Tile, Maybe Bonus)
   --deriving (Show, Eq)
 --type Board = Matrix Square
-
-
-eSquare = Square (Nothing, Nothing)
-
-testBoard1 = fromLists
-  [
-    [eSquare, eSquare,                      eSquare,  eSquare],
-    [eSquare, Square (Just (Tile ('r', 0)), Nothing), eSquare],
-    [eSquare, Square (Just (Tile ('e', 0)), Nothing), eSquare]
-  ]
-
-testRack1 = [Tile ('a', 1), Tile ('c', 1), Tile ('w', 4)]
 
 main :: IO ()
 main = do
