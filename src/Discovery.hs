@@ -42,10 +42,12 @@ getCrossPlayspot board (vx, vy) c tile = (crossWord, crossSquares)
     iter :: (Int, Int) -> [TileCoordinate]
     iter (vx, vy) = iterate (\(Coordinate (x, y)) -> Coordinate (x + vx, y + vy)) tile
     coordinatesToSquares :: [TileCoordinate] -> [Square]
-    coordinatesToSquares infTiles = catMaybes $ takeWhile isJust $ map (coordinateToSquare board) infTiles
-    backwards = reverse $ coordinatesToSquares $ iter (vx, vy)
-    forwards = coordinatesToSquares $ iter (-vx, -vy)
-    crossSquares = init backwards ++ tail forwards
+    coordinatesToSquares infTiles = catMaybes $ takeWhile hasChar $ map (coordinateToSquare board) infTiles
+    (centerCoord : infCoords) = iter (vx, vy)
+    centerSquare = unsafeCoordinateToSquare board centerCoord
+    squaresBefore = reverse $ coordinatesToSquares infCoords
+    squaresAfter = coordinatesToSquares . tail $ iter (-vx, -vy)
+    crossSquares = squaresBefore ++ centerSquare : squaresAfter
     crossWord = map (tileToChar . squareToTile c) crossSquares
 
 getCrossPlayspots :: Board -> (String, Coords) -> [(String, [Square])]

@@ -21,8 +21,8 @@ playspotCoords board = horizontalWords ++ verticalWords
     isValidHWord r c ws = isValid (safeGet r (c - 1) board) (safeGet r (c + ws) board)
     isValidVWord r c ws = isValid (safeGet (r - 1) c board) (safeGet (r + ws) c board)
 
-    getHWords ws = [[ Coordinate (r + y, c) | y <- [0..(ws - 1)] ] | c <- [1..cols], r <- [1..(rows - ws + 1)], isValidHWord r c ws]
-    getVWords ws = [[ Coordinate (r, c + x) | x <- [0..(ws - 1)] ] | r <- [1..rows], c <- [1..(cols - ws + 1)], isValidVWord r c ws]
+    getHWords ws = [[ Coordinate (r, c + x) | x <- [0..(ws - 1)] ] | r <- [1..rows], c <- [1..(cols - ws + 1)], isValidHWord r c ws]
+    getVWords ws = [[ Coordinate (r + y, c) | y <- [0..(ws - 1)] ] | c <- [1..cols], r <- [1..(rows - ws + 1)], isValidVWord r c ws]
     horizontalWords = concatMap getHWords wordSizes
     verticalWords = concatMap getVWords wordSizes
 
