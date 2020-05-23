@@ -51,10 +51,16 @@ getCrossPlayspot board (vx, vy) c tile = (crossWord, crossSquares)
     crossSquares = squaresBefore ++ centerSquare : squaresAfter
     crossWord = map (tileToChar . squareToTile c) crossSquares
 
+-- we filter out crosswords that have already been played b/c
+-- A) we don't want to score it and
+-- B) someone could have played an unchallenged illegal word
 getCrossPlayspots :: Board -> (String, Coords) -> [(String, [Square])]
-getCrossPlayspots board (word, playspot) = filter ((>1) . length . fst) $ zipWith (getCrossPlayspot board xVector) word playspot
+getCrossPlayspots board (word, playspot) = actualXSpots
   where
     xVector = swap $ toVector (head playspot) (playspot !! 1)  -- all words are at least 2 chars long
+    charCoords = filter (not . unsafeHasChar . unsafeCoordinateToSquare board . snd) (zip word playspot)
+    xSpots = map (uncurry (getCrossPlayspot board xVector)) charCoords
+    actualXSpots = filter ((>1) . length . fst) xSpots
 
 expandPlayspots :: [(String, [Coords])] -> [(String, Coords)]
 expandPlayspots = concatMap (\(s, pss) -> map (s,) pss)

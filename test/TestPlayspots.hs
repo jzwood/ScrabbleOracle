@@ -15,6 +15,10 @@ spots2 = legalPlayspotCoords testBoard2
 frags2 = groupCoordsByFragment $ map (getFragment testBoard2) spots2
 strs2 = fillFrags (toLetters testRack2) frags2
 
+spots3 = legalPlayspotCoords testBoard3
+frags3 = groupCoordsByFragment $ map (getFragment testBoard3) spots3
+strs3 = fillFrags (toLetters testRack3) frags3
+
 {-
 isWord <- isInDictionary
 x1 = filter (isWord . fst) strs
@@ -29,6 +33,13 @@ y2 = expandPlayspots y1
 y3 = map fst $ concatMap (getCrossPlayspots testBoard2) y2
 y4 = filter isWord y3
 -}
+{-
+isWord <- isInDictionary
+z1 = filter (isWord . fst) strs3
+z2 = expandPlayspots z1
+z3 = map fst $ concatMap (getCrossPlayspots testBoard2) z2
+z4 = filter isWord z3
+-}
 
 trie = T.fromList frags
 
@@ -41,4 +52,6 @@ main = do
   Prelude.putStr . show $ map fst x
   y <- validateGroupedPlayspots testBoard2 strs2
   Prelude.putStr . show $ map fst y
+  z <- validateGroupedPlayspots testBoard3 strs3
+  Prelude.putStr . show $ map fst z
   return ()

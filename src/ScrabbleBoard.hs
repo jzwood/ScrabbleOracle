@@ -14,6 +14,9 @@ type Board = Matrix Square
 newtype TileCoordinate = Coordinate (Int, Int)
   deriving (Show, Eq)
 
+tileMap :: (TileCoordinate -> TileCoordinate) -> TileCoordinate -> TileCoordinate
+tileMap f = f
+
 type Coords = [TileCoordinate]
 type WordFragment = String
 -- newtype WordFragment = Frag String
@@ -41,6 +44,10 @@ tileToChar (Tile (c, _)) = c
 hasChar :: Maybe Square -> Bool
 hasChar (Just (Square (Just (Tile _), _))) = True
 hasChar _ = False
+
+unsafeHasChar :: Square -> Bool
+unsafeHasChar (Square (Just (Tile _), _)) = True
+unsafeHasChar _ = False
 
 hasBonus :: Maybe Square -> Bool
 hasBonus (Just (Square (_, Just _))) = True
