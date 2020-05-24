@@ -7,10 +7,10 @@ eSquare = Square (Nothing, Nothing)
 
 testBoard1 = fromLists
   [
-    [eSquare, eSquare,                                eSquare],
-    [eSquare, Square (Nothing, Just DoubleWordScore), eSquare],
-    [eSquare, Square (Just (Tile ('R', 1)), Nothing), eSquare],
-    [eSquare, Square (Just (Tile ('E', 1)), Nothing), eSquare]
+    [eSquare, eSquare,                                                eSquare],
+    [eSquare, Square (Nothing, Just DoubleWordScore),                 eSquare],
+    [eSquare, Square (Just (Tile ('R', 1)), Just DoubleLetterScore),  eSquare],
+    [eSquare, Square (Just (Tile ('E', 1)), Nothing),                 eSquare]
   ]
 
 testBoard2 = fromLists

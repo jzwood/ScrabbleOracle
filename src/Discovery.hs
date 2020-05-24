@@ -36,8 +36,8 @@ searchTrie (T.Node mc m) rack word = coordsAtNode ++ exploreWildMap ++ exploreCh
 fillFrags :: String -> [(WordFragment, [Coords])] -> [(String, [Coords])]
 fillFrags rackLetters fragmentPlayspots = searchTrie (T.fromList fragmentPlayspots) rackLetters []
 
-getCrossPlayspot :: Board -> (Int, Int) -> Char -> TileCoordinate -> (String, [Square])
-getCrossPlayspot board (vx, vy) c tile = (crossWord, crossSquares)
+getXPlayspot :: Board -> (Int, Int) -> Char -> TileCoordinate -> (String, [Square])
+getXPlayspot board (vx, vy) c tile = (xWord, xSquares)
   where
     iter :: (Int, Int) -> [TileCoordinate]
     iter (vx, vy) = iterate (\(Coordinate (x, y)) -> Coordinate (x + vx, y + vy)) tile
@@ -48,18 +48,18 @@ getCrossPlayspot board (vx, vy) c tile = (crossWord, crossSquares)
     centerSquare = unsafeCoordinateToSquare board centerCoord
     squaresBefore = reverse . coordinatesToSquares $ infCoordsRev
     squaresAfter = coordinatesToSquares infCoords
-    crossSquares = squaresBefore ++ centerSquare : squaresAfter
-    crossWord = map (tileToChar . squareToTile c) crossSquares
+    xSquares = squaresBefore ++ centerSquare : squaresAfter
+    xWord = map (tileToChar . squareToTile c) xSquares
 
 -- we filter out crosswords that have already been played b/c
 -- A) we don't want to score it and
 -- B) someone could have played an unchallenged illegal word
-getCrossPlayspots :: Board -> (String, Coords) -> [(String, [Square])]
-getCrossPlayspots board (word, playspot) = actualXSpots
+getXPlayspots :: Board -> (String, Coords) -> [(String, [Square])]
+getXPlayspots board (word, playspot) = actualXSpots
   where
     xVector = swap $ toVector (head playspot) (playspot !! 1)  -- all words are at least 2 chars long
     charCoords = filter (not . unsafeHasChar . unsafeCoordinateToSquare board . snd) (zip word playspot)
-    xSpots = map (uncurry (getCrossPlayspot board xVector)) charCoords
+    xSpots = map (uncurry (getXPlayspot board xVector)) charCoords
     actualXSpots = filter ((>1) . length . fst) xSpots
 
 expandPlayspots :: [(String, [Coords])] -> [(String, Coords)]
@@ -74,5 +74,5 @@ validateGroupedPlayspots board wordPlayspots  = do
       playspotsWithValidWord :: [(String, Coords)]
       playspotsWithValidWord = expandPlayspots playspotsGroupedByValidWord
       validPlayspotWithWord :: [(String, Coords)]
-      validPlayspotWithWord = filter (all (isWord . fst) . getCrossPlayspots board) playspotsWithValidWord
+      validPlayspotWithWord = filter (all (isWord . fst) . getXPlayspots board) playspotsWithValidWord
   return validPlayspotWithWord
