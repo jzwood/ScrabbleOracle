@@ -28,7 +28,7 @@ searchTrie :: Trie Char [Coords] -> String -> WordFragment -> [(String, [Coords]
 searchTrie (T.Node mc m) rack word = coordsAtNode ++ exploreWildMap ++ exploreCharMap
   where
     coordsAtNode = [(reverse word, fromJust mc) | isJust mc]
-    (wildTries, charTries) = L.partition ((==wildcardChar) . fst) (M.assocs m)
+    (wildTries, charTries) = L.partition ((==mysteryChar) . fst) (M.assocs m)
     subracks = nub $ map (\r -> (r, rack\\[r])) rack
     exploreWildMap =  concatMap (\(_, t) -> concatMap (\(c, cs) -> searchTrie t cs (c : word)) subracks) wildTries
     exploreCharMap = concatMap (\(c, t) -> searchTrie t rack (c: word)) charTries

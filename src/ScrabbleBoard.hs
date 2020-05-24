@@ -53,8 +53,10 @@ hasBonus :: Maybe Square -> Bool
 hasBonus (Just (Square (_, Just _))) = True
 hasBonus _ = False
 
-wildcardChar = '_'
-charToValue = [ (wildcardChar, 0),
+mysteryChar = '*'
+
+blank = '_'
+charToValue = [ ('_', 0),
                 ('A', 1),
                 ('B', 3),
                 ('C', 3),

@@ -3,14 +3,17 @@ module Scoring where
 import Data.List (mapAccumR)
 import ScrabbleBoard
 
-score :: Board -> (String, Coords) -> (Coords, Score)
-score board (s, c)= (c, 1) -- @TODO
+-- refactor to simply return score
+score :: Board -> (String, Coords) -> (String, Coords, Score)
+score board (s, c) = (s, c, 1) -- @TODO
+
+--score' :: Board -> Coords -> Score
+--score' board coords =
+  --where
+    --squares = map unsafeCoordinateToSquare coords
 
 tileToScore :: Tile -> Score
 tileToScore (Tile (a, s)) = s
-
-scoreWord :: [Square] -> Score
-scoreWord = undefined
 
 --type Coords = [TileCoordinate]
 --newtype Tile = Tile (Char, Integer)
@@ -28,8 +31,8 @@ scoreTile multiplier (Tile (_, value), Square (Nothing, bonus))
   | otherwise = (multiplier, value)
 scoreTile multiplier (_, Square (Just (Tile (_, value)), _)) = (multiplier, value)
 
-scoreMainAxis :: Board -> [Tile] -> [TileCoordinate] -> Score
-scoreMainAxis board tiles coordinates = points
+scoreWord :: Board -> [Tile] -> [TileCoordinate] -> Score
+scoreWord board tiles coordinates = points
   where
     squares = map (unsafeCoordinateToSquare board) coordinates
     (multiplier, valueList) = mapAccumR scoreTile (*1) (zip tiles squares)

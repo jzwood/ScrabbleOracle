@@ -16,7 +16,10 @@ import ScrabbleBoard
   7. score all remaining valid playable spots and order from highest point value to lowest
 --}
 
-oracle :: Board -> Rack -> IO [(Coords, Score)]
+trd :: (a, b, c) -> c
+trd (a, b, c) = c
+
+oracle :: Board -> Rack -> IO [(String, Coords, Score)]
 oracle board rack = do
   let playspotCoords :: [Coords]
       playspotCoords = legalPlayspotCoords board
@@ -26,4 +29,4 @@ oracle board rack = do
       coordsGroupedByStr = fillFrags (toLetters rack) coordsGroupedByFragment
   -- validPlayspotsWithWords :: IO [(String, Coords)]
   validPlayspotsWithWords <- validateGroupedPlayspots board coordsGroupedByStr
-  return $ sortOn (negate . snd) $ map (score board) validPlayspotsWithWords
+  return $ sortOn (negate . trd) $ map (score board) validPlayspotsWithWords
