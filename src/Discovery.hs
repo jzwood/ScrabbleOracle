@@ -33,8 +33,8 @@ searchTrie (T.Node mc m) rack word = coordsAtNode ++ exploreWildMap ++ exploreCh
     exploreWildMap =  concatMap (\(_, t) -> concatMap (\(c, cs) -> searchTrie t cs (c : word)) subracks) wildTries
     exploreCharMap = concatMap (\(c, t) -> searchTrie t rack (c: word)) charTries
 
-fillFrags :: String -> [(WordFragment, [Coords])] -> [(String, [Coords])]
-fillFrags rackLetters fragmentPlayspots = searchTrie (T.fromList fragmentPlayspots) rackLetters []
+fillFrags :: Rack -> [(WordFragment, [Coords])] -> [(String, [Coords])]
+fillFrags rack fragmentPlayspots = searchTrie (T.fromList fragmentPlayspots) rack []
 
 getXPlayspot :: Board -> (Int, Int) -> Char -> TileCoordinate -> (String, [Square])
 getXPlayspot board (vx, vy) c tile = (xWord, xSquares)

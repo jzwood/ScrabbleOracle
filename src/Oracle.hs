@@ -16,26 +16,19 @@ import ScrabbleBoard
   7. score all remaining valid playable spots and order from highest point value to lowest
 --}
 
-trd :: (a, b, c) -> c
-trd (a, b, c) = c
+getCoordinatesGroupedByStr :: Board -> Rack -> [(String, [Coords])]
+getCoordinatesGroupedByStr board rack = coordsGroupedByStr
+  where
+    playspotCoords = legalPlayspotCoords board
+    coordsGroupedByFragment = groupCoordsByFragment $ map (getFragment board) playspotCoords
+    coordsGroupedByStr = fillFrags rack coordsGroupedByFragment
 
-
-discover :: Board -> Rack -> [(String, [Coords])]
-discover board rack =
-  let playspotCoords :: [Coords]
-      playspotCoords = legalPlayspotCoords board
-      coordsGroupedByFragment :: [(WordFragment, [Coords])]
-      coordsGroupedByFragment = groupCoordsByFragment $ map (getFragment board) playspotCoords
-      coordsGroupedByStr :: [(String, [Coords])]
-      coordsGroupedByStr = fillFrags rack coordsGroupedByFragment
-  in
-      coordsGroupedByStr
-
---oracle :: Board -> Rack -> IO [(String, Coords, Score)]
-oracle :: Board -> Rack -> IO [(String, Score)]
+oracle :: Board -> Rack -> IO [(String, Score, Coords)]
 oracle board rack = do
-  let coordsGroupedByStr = discover board rack
+  let coordsGroupedByStr = getCoordinatesGroupedByStr board rack
   -- validPlayspotsWithWords :: IO [(String, Coords)]
   validPlayspotsWithWords <- validateGroupedPlayspots board coordsGroupedByStr
-  let rankedWords = sortOn (negate . trd) $ map (score board) validPlayspotsWithWords
-  return $ map (\(a,b,c) -> (a, c)) rankedWords
+  let scores = map (uncurry (score board)) validPlayspotsWithWords
+      (words, coords) = unzip validPlayspotsWithWords
+      rankedPlayspots = sortOn (negate . (\(_, a, _) -> a)) $ zip3 words scores coords
+  return rankedPlayspots

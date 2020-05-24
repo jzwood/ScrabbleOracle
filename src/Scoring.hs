@@ -5,12 +5,8 @@ import ScrabbleBoard
 import Discovery
 import qualified Data.Map as M
 
--- eventually refactor to simply return score
-score :: Board -> (String, Coords) -> (String, Coords, Score)
-score board (s, c) = (s, c, score' board s c) -- @TODO
-
-score' :: Board -> String -> Coords -> Score
-score' board word coords = mainAxispoints + xAxisPoints
+score :: Board -> String -> Coords -> Score
+score board word coords = mainAxispoints + xAxisPoints
   where
     squares = map (unsafeCoordinateToSquare board) coords
     mainAxispoints = scoreWord board word squares
