@@ -1,2 +1,7 @@
+module Spec where
+
+import Oracle
+import Test.Hspec
+
 main :: IO ()
-main = putStrLn "Test suite not yet implemented"
+main = undefined

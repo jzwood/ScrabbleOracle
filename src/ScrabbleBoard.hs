@@ -51,7 +51,7 @@ hasBonus :: Maybe Square -> Bool
 hasBonus (Just (Square (_, Just _))) = True
 hasBonus _ = False
 
-mysteryChar = '*'
+mysteryChar = '?'
 
 blank = '_'
 charToValue = M.fromList [('_', 0),

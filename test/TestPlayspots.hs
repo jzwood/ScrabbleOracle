@@ -9,15 +9,15 @@ import qualified Trie as T
 
 spots = legalPlayspotCoords testBoard1
 frags = groupCoordsByFragment $ map (getFragment testBoard1) spots
-strs = fillFrags (toLetters testRack1) frags
+strs = fillFrags testRack1 frags
 
 spots2 = legalPlayspotCoords testBoard2
 frags2 = groupCoordsByFragment $ map (getFragment testBoard2) spots2
-strs2 = fillFrags (toLetters testRack2) frags2
+strs2 = fillFrags testRack2 frags2
 
 spots3 = legalPlayspotCoords testBoard3
 frags3 = groupCoordsByFragment $ map (getFragment testBoard3) spots3
-strs3 = fillFrags (toLetters testRack3) frags3
+strs3 = fillFrags testRack3 frags3
 
 {-
 isWord <- isInDictionary
