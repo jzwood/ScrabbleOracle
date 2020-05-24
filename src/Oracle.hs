@@ -27,7 +27,7 @@ discover board rack =
       coordsGroupedByFragment :: [(WordFragment, [Coords])]
       coordsGroupedByFragment = groupCoordsByFragment $ map (getFragment board) playspotCoords
       coordsGroupedByStr :: [(String, [Coords])]
-      coordsGroupedByStr = fillFrags (toLetters rack) coordsGroupedByFragment
+      coordsGroupedByStr = fillFrags rack coordsGroupedByFragment
   in
       coordsGroupedByStr
 

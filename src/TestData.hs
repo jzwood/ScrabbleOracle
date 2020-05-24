@@ -25,7 +25,7 @@ testBoard3 = fromLists
     [Square (Just (Tile ('X', 8)), Nothing), eSquare]
   ]
 
-testRack1 = [Tile ('A', 1), Tile ('C', 1), Tile ('W', 4)]
-testRack2 = [Tile ('X', 1), Tile ('I', 1)]
-testRack3 = [Tile ('O', 1), Tile ('I', 1)]
+testRack1 = "CAW"
+testRack2 = "XI"
+testRack3 = "OI"
 
