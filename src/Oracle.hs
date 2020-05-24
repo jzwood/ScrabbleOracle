@@ -19,14 +19,23 @@ import ScrabbleBoard
 trd :: (a, b, c) -> c
 trd (a, b, c) = c
 
-oracle :: Board -> Rack -> IO [(String, Coords, Score)]
-oracle board rack = do
+
+discover :: Board -> Rack -> [(String, [Coords])]
+discover board rack =
   let playspotCoords :: [Coords]
       playspotCoords = legalPlayspotCoords board
       coordsGroupedByFragment :: [(WordFragment, [Coords])]
       coordsGroupedByFragment = groupCoordsByFragment $ map (getFragment board) playspotCoords
       coordsGroupedByStr :: [(String, [Coords])]
       coordsGroupedByStr = fillFrags (toLetters rack) coordsGroupedByFragment
+  in
+      coordsGroupedByStr
+
+--oracle :: Board -> Rack -> IO [(String, Coords, Score)]
+oracle :: Board -> Rack -> IO [(String, Score)]
+oracle board rack = do
+  let coordsGroupedByStr = discover board rack
   -- validPlayspotsWithWords :: IO [(String, Coords)]
   validPlayspotsWithWords <- validateGroupedPlayspots board coordsGroupedByStr
-  return $ sortOn (negate . trd) $ map (score board) validPlayspotsWithWords
+  let rankedWords = sortOn (negate . trd) $ map (score board) validPlayspotsWithWords
+  return $ map (\(a,b,c) -> (a, c)) rankedWords
