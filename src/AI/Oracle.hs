@@ -1,11 +1,11 @@
-module Oracle where
+module AI.Oracle where
 
 import Data.List (sortOn)
 
-import Discovery
-import Playspots
-import Scoring
-import ScrabbleBoard
+import AI.Discovery
+import AI.Playspots
+import AI.Scoring
+import Game.ScrabbleBoard
 
 
 getCoordinatesGroupedByStr :: Board -> Rack -> [(String, [Coords])]

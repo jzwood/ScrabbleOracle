@@ -1,6 +1,6 @@
 {-# LANGUAGE TupleSections #-}
 
-module Discovery where
+module AI.Discovery where
 
 import Data.List
 import Data.Tuple
@@ -11,9 +11,9 @@ import qualified Data.List as L
 import qualified Data.Map.Lazy as M
 import qualified System.IO as FS
 
-import Trie (Trie)
-import qualified Trie as T
-import ScrabbleBoard
+import Lib.Trie (Trie)
+import qualified Lib.Trie as T
+import Game.ScrabbleBoard
 
 dictPath = "dicts/collins_scrabble_words2019.txt"
 

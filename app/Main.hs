@@ -1,8 +1,8 @@
 module Main where
 
-import Oracle
+import AI.Oracle
 import Data.Matrix (fromLists)
-import ScrabbleBoard
+import Game.ScrabbleBoard
 import TestData
 
 --newtype Tile = Tile (Char, Integer)

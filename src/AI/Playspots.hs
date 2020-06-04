@@ -1,9 +1,9 @@
-module Playspots where
+module AI.Playspots where
 
 import Data.Matrix
 import Data.Maybe
 import Data.List (genericLength, groupBy, sortOn)
-import ScrabbleBoard
+import Game.ScrabbleBoard
 
 type Adjacencies = Matrix Bool
 boardSize = 15

@@ -1,4 +1,4 @@
-module ScrabbleBoard where
+module Game.ScrabbleBoard where
 
 import Data.Matrix
 import Data.Maybe (fromMaybe)
@@ -14,9 +14,6 @@ type Board = Matrix Square
 
 newtype TileCoordinate = Coordinate (Int, Int)
   deriving (Show, Eq)
-
-tileMap :: (TileCoordinate -> TileCoordinate) -> TileCoordinate -> TileCoordinate
-tileMap f = f
 
 type Coords = [TileCoordinate]
 type WordFragment = String

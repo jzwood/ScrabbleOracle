@@ -1,8 +1,8 @@
-module Scoring where
+module AI.Scoring where
 
 import Data.List (mapAccumR)
-import ScrabbleBoard
-import Discovery
+import Game.ScrabbleBoard
+import AI.Discovery
 import qualified Data.Map as M
 
 score :: Board -> String -> Coords -> Score

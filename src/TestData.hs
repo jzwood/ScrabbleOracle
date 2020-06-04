@@ -1,7 +1,7 @@
 module TestData where
 
 import Data.Matrix (fromLists)
-import ScrabbleBoard
+import Game.ScrabbleBoard
 
 eSquare = Square (Nothing, Nothing)
 

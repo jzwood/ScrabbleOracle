@@ -31,4 +31,5 @@ fragStrings testBoard testRack = nub $ map fst strs
     strs = fillFrags testRack frags
 
 main :: IO ()
-main = putStr . show $ fragStrings testBoard1 r1
+--main = putStr . show $ fragStrings testBoard1 r1
+main = putStr . show $ startBoard
