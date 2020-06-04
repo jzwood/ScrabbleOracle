@@ -2,7 +2,7 @@ module Game.ScrabbleGame where
 
 import Data.List
 import Data.Matrix as M
-import ScrabbleBoard
+import Game.ScrabbleBoard
 import System.Random
 
 
@@ -39,17 +39,24 @@ startBoard :: Board
 startBoard = M.fromLists $ map (map rawCharToInitSquare) rawStartBoard
 
 squareToChar :: Square -> Char
-squareToChar (Square (Nothing, _)) = '_'
+squareToChar (Square (Nothing, _)) = ' '
 squareToChar (Square (Just (Tile (c, _)), _)) = c
 
-boardToRawString :: Board -> [String]
-boardToRawString board = map (map squareToChar) $ M.toLists board
+--boardToRawString :: Board -> [String]
+--boardToRawString board = map (map squareToChar) $ M.toLists board
+
+easyReadBoard :: Board -> M.Matrix Char
+easyReadBoard = M.mapPos (\_ s -> squareToChar s)
+
+--maybeBoardToRawString :: Maybe Board -> [String]
+--maybeBoardToRawString Nothing = []
+--maybeBoardToRawString (Just b) = boardToRawString b
 
 initLetterBag :: StdGen -> String
 initLetterBag stdGen = shuffledLetters
   where
     orderedLetters = concatMap (\(c, n) -> genericReplicate n c) charFrequencies
-    randIntStream = randomRs (0::Integer, 25::Integer) stdGen
+    randIntStream = randomRs (0::Integer, 100 * 25::Integer) stdGen
     taggedLetters = zip randIntStream orderedLetters
     shuffledTaggedLetters = sortOn fst taggedLetters
     shuffledLetters = map snd shuffledTaggedLetters

@@ -32,6 +32,7 @@ library
       AI.Playspots
       AI.Scoring
       Game.ScrabbleBoard
+      Game.ScrabbleGame
       Lib.Trie
       TestData
   other-modules:
@@ -43,6 +44,7 @@ library
     , containers >=0.6.2.1
     , matrix >=0.3.6.1
     , unordered-containers >=0.2.10.0
+    , random == 1.1
     , text
     , aeson
   default-language: Haskell2010

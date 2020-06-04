@@ -17,7 +17,6 @@ newtype TileCoordinate = Coordinate (Int, Int)
 
 type Coords = [TileCoordinate]
 type WordFragment = String
--- newtype WordFragment = Frag String
 type Rack = String
 type Score = Integer
 
