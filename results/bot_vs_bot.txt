@@ -1,0 +1,77 @@
+┌                               ┐
+│     O N F A L L               │
+│       U                       │
+│   J O M O                     │
+│       B               N O T T │
+│     R E H           A U R A E │
+│     I R I D       F I R E D   │
+│     V   C O W A G E           │
+│     I N K Y   A   D I X I E S │
+│     N A E             Y       │
+│     G O S             L   C   │
+│       I T           Q O P H   │
+│           T E R M     S   U T │
+│             N A Z E   E   T A │
+│               N E W B S   E L │
+│       V I R G A E         D I │
+
+
+┌                               ┐
+│ A T   F L A W N               │
+│ B Y   A   R E E L E R         │
+│ O N   C                       │
+│ R E   I                     D │
+│ T     A L P I N E           U │
+│ I G N E O U S     F O B   H E │
+│ V         G H A Z I     J O T │
+│ E     Q I S   A   T R U A N T │
+│       U                   K O │
+│       O           P A R L E S │
+│       I         M A X     D   │
+│       T       W A D E S       │
+│                 Y I D         │
+│           V E G O             │
+│               O R C           │
+└                               ┘
+
+-----with scores----
+
+┌                               ┐
+│ M   Q                         │
+│ I   U                         │
+│ N   I                         │
+│ D   N U G                     │
+│ L O   R U C                   │
+│ E W       H A T               │
+│ S   T O T A L E D           I │
+│ S E I F       A           O X │
+│       T H O W L         P O I │
+│   A     A P O       B R A Z A │
+│ A L C I D   K I E V E   R E   │
+│ F A   D E B E       G O V S   │
+│ I T     S Y N           E     │
+│ R E               J E A N     │
+│ E                     Y U R T │
+└                               ┘
+SCORE 705
+RUNTIME: 29.35s
+
+┌                               ┐
+│               W     T I L D E │
+│       C O Q U I T O       E   │
+│     Z O R I   D A W D L E R   │
+│     A R       E       I   M E │
+│     G A P     N I T O N     R │
+│       N   J O     Y A N K   G │
+│       T     H A V E R S   N O │
+│ C H L O A S M A           I T │
+│         X I S             E   │
+│       D E P               V   │
+│   G O A L                 E F │
+│ B I N E S                   U │
+│                           A B │
+│                           Y A │
+│                           U R │
+└                               ┘
+SCORE 720
+RUNTIME: 34.58s
