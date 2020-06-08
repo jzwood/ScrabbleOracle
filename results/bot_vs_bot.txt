@@ -75,3 +75,120 @@ RUNTIME: 29.35s
 └                               ┘
 SCORE 720
 RUNTIME: 34.58s
+
+┌                               ┐
+│ J I B E S     R O W E L       │
+│         U         H E A V E N │
+│     A G N A T I C A L         │
+│ T I T U P       O           E │
+│         R       E P I Z O O N │
+│   Q   S O       N     A B Y S │
+│ L A D H O O D   U           N │
+│   T   A F F E A R D         A │
+│       G         I           R │
+│       G                   Y E │
+│       E         M O L D I E R │
+│   M A R T E X T           W   │
+│               I           E   │
+│               K           N   │
+│               I               │
+└                               ┘
+RUNTIME: 41.89s
+
+┌                               ┐
+│   C                           │
+│   L     W     T               │
+│   O O   A M   H M             │
+│   O K   N U   A A             │
+│   P A   E D   T I             │
+│     P E   G   A R S           │
+│     I N   I   W   N           │
+│       F A N B A S E S         │
+│       E   G O Y   E T A       │
+│       L     U     Z O A   V   │
+│     J O Y   V     E A R   R E │
+│     O N O   I   E D I T R I X │
+│     G   D   E F       I   L I │
+│         H E R E T I C S     N │
+│               T             E │
+└                               ┘
+RUNTIME: 38.22s
+
+
+┌                               ┐
+│ V A K E E L               E   │
+│   D       A           V U M   │
+│   Z O N O I D S     W A T A P │
+│           R E A N N E X   I   │
+│   W I T H I E R           L   │
+│   A     O E       Q U I N E   │
+│   G   L O R N E R         D A │
+│ J O     T     A             F │
+│ A N     I                   O │
+│ P E C   E G O T I S M       U │
+│   D O   R     H   T Y G     L │
+│     R         I     C U B     │
+│     F         B               │
+│               E               │
+│               T               │
+└                               ┘
+
+RUNTIME: 45.30s
+
+┌                               ┐
+│ T                       C     │
+│ I T   D                 O     │
+│ F E N A G L E D         V     │
+│ F E   I         A       E     │
+│ I N   M         N   O   T   W │
+│ N Y   O         A Z U L E J O │
+│ G     K         E   T   D   R │
+│ S     U P B E A R E R S     S │
+│           A     O   O       H │
+│           Y     B   A     Q I │
+│         G A U C I E R     U P │
+│           R     A         O   │
+│           D               T   │
+│ V A R N I S H     W E X   A   │
+│             E T I O L I N     │
+└                               ┘
+RUNTIME: 51.94s
+
+┌                               ┐
+│ U P O   S N O W S U I T     B │
+│ H E U G H     E             A │
+│     D O Y     F             W │
+│               T   A T T A C K │
+│             V E R G E     E   │
+│           Q I             Z   │
+│             D J I N S     V   │
+│               A     T Y R E D │
+│           I X I A S           │
+│   C     A N I L   A           │
+│ F O R A M         U           │
+│   R   M I R O     N           │
+│   G         P O R T A B L E   │
+│   I               E           │
+│     N I E L L O E D           │
+└                               ┘
+SCORE: 822
+RUNTIME: 48.89s
+┌                               ┐
+│ S             Q             C │
+│ H M           U           K O │
+│ I N           A           O W │
+│ N A           R         G U P │
+│ J       T A T T E R S   A R   │
+│ U P       B E           D A   │
+│   L       A E D I N E   A     │
+│ G O E T I C   A     L A R G O │
+│   W     D I E L         E     │
+│   M I                   N E   │
+│ L A V V Y             Z E X   │
+│ O N Y                 E   U   │
+│ T                     D   R   │
+│ T H I E F                 B   │
+│ O                     F E S S │
+└                               ┘
+SCORE: 749
+RUNTIME: 40.99s

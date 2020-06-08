@@ -1,17 +1,19 @@
 module AI.Scoring where
 
-import Data.List (mapAccumR)
+import Data.List (mapAccumR, genericLength)
 import Game.ScrabbleBoard
 import AI.Discovery
 import qualified Data.Map as M
 
 score :: Board -> String -> Coords -> Score
-score board word coords = mainAxispoints + xAxisPoints
+score board word coords = mainAxispoints + xAxisPoints + bonus
   where
     squares = map (unsafeCoordinateToSquare board) coords
     mainAxispoints = scoreWord board word squares
     xPlayspots = getXPlayspots board (word, coords)
     xAxisPoints = sum $ map (uncurry (scoreWord board)) xPlayspots
+    numPlayedTiles = genericLength $ filter (not . unsafeHasChar) squares
+    bonus = if numPlayedTiles == 7 then 50 else 0
 
 wordToVals :: String -> [Integer]
 wordToVals = map (charToValue M.!)
