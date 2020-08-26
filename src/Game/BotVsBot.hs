@@ -76,4 +76,4 @@ playGame = do
   putStr . show $ s
 
 main :: IO ()
-main = playGame
+main = playGame''

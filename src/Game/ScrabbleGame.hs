@@ -4,6 +4,7 @@ import Data.List
 import Data.Matrix as M
 import Game.ScrabbleBoard
 import System.Random
+import qualified Data.Map as Map
 
 
 rawStartBoard :: [String]
@@ -26,17 +27,17 @@ rawStartBoard =
   ]
 
 
-rawCharToInitSquare :: Char -> Square
-rawCharToInitSquare c = case c of
+rawCharToSquare :: Char -> Square
+rawCharToSquare c = case c of
   '_' -> Square (Nothing, Nothing)
   '1' -> Square (Nothing, Just DoubleLetterScore)
   '2' -> Square (Nothing, Just DoubleWordScore)
   '3' -> Square (Nothing, Just TripleLetterScore)
   '4' -> Square (Nothing, Just TripleWordScore)
-  _   -> Square (Just (Tile (c, 1)), Nothing)
+  _   -> Square (Just (Tile (c, Map.findWithDefault 1 c charToValue)), Nothing)
 
 startBoard :: Board
-startBoard = M.fromLists $ map (map rawCharToInitSquare) rawStartBoard
+startBoard = M.fromLists $ map (map rawCharToSquare) rawStartBoard
 
 squareToChar :: Square -> Char
 squareToChar (Square (Nothing, _)) = ' '
