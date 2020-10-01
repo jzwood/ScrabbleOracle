@@ -1,5 +1,7 @@
 module Game.ScrabbleBoard where
 
+import Data.Char
+import Control.Applicative
 import Data.Matrix
 import Data.Maybe (fromMaybe)
 import qualified Data.Map as M
@@ -77,3 +79,19 @@ charToValue = M.fromList [('_', 0),
                           ('X', 8),
                           ('Y', 4),
                           ('Z', 10)]
+
+-- PARSING FOREIGN INPUT
+
+--parseRawBoard :: String -> Maybe Board
+--parseRawBoard rb =
+  --rows = lines rb
+
+
+rawCharToSquare :: Char -> Square
+rawCharToSquare c = case c of
+  '_' -> Square (Nothing, Nothing)
+  '1' -> Square (Nothing, Just DoubleLetterScore)
+  '2' -> Square (Nothing, Just DoubleWordScore)
+  '3' -> Square (Nothing, Just TripleLetterScore)
+  '4' -> Square (Nothing, Just TripleWordScore)
+  _   -> Square (Just (Tile (c, M.findWithDefault 1 c charToValue)), Nothing)

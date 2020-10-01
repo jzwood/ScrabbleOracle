@@ -38,7 +38,18 @@ makePlay (letterBag, board, rack, runningScore) =
           charCoords = zip word coords
           newBoard = applyPlayspot board charCoords
           (newLetterBag, newRack) = drawFromLetterBag letterBag rack board charCoords
-      return (newLetterBag, newBoard, newRack, score + runningScore)
+          newScore = runningScore + score
+      printPlay newBoard word score
+      --putStr . unlines $ Mat.toLists $ easyReadBoard newBoard
+      return (newLetterBag, newBoard, newRack, newScore)
+
+printPlay :: Board -> String -> Score -> IO ()
+printPlay board word score = do
+    putStr $ genericReplicate 100 '\n'
+    putStr . unlines $ Mat.toLists $ easyReadBoard board
+    putChar '\n'
+    putStrLn $ "word: " ++ word
+    putStrLn $ "score: " ++ show score
 
 startGame :: StdGen -> IO (LetterBag, Board, Rack, Score)
 startGame g =
@@ -72,8 +83,7 @@ playGame = do
   g <- newStdGen
   start <- startGame g
   (l, b, r, s) <- iterateUntilM isGameOver makePlay start
-  putStr . show $ easyReadBoard b
-  putStr . show $ s
+  putStr $ "total combined score: " ++ show s
 
 main :: IO ()
 main = playGame

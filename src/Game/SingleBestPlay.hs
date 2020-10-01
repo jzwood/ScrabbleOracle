@@ -7,6 +7,10 @@ import Game.ScrabbleGame
 import qualified Data.Map as M
 import qualified Data.Matrix as Mat
 
+--parseForeignBoardRepresentation :: String -> Maybe Board
+--parseForeignBoardRepresentation rawboard =
+  --where
+    --twoDimBoard = lines rawBoard
 
 rawBoardToBoard :: [String] -> Board
 rawBoardToBoard rawBoard = Mat.fromLists $ map (map rawCharToSquare) rawBoard

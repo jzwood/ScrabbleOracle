@@ -27,14 +27,14 @@ rawStartBoard =
   ]
 
 
-rawCharToSquare :: Char -> Square
-rawCharToSquare c = case c of
-  '_' -> Square (Nothing, Nothing)
-  '1' -> Square (Nothing, Just DoubleLetterScore)
-  '2' -> Square (Nothing, Just DoubleWordScore)
-  '3' -> Square (Nothing, Just TripleLetterScore)
-  '4' -> Square (Nothing, Just TripleWordScore)
-  _   -> Square (Just (Tile (c, Map.findWithDefault 1 c charToValue)), Nothing)
+--rawCharToSquare :: Char -> Square
+--rawCharToSquare c = case c of
+  --'_' -> Square (Nothing, Nothing)
+  --'1' -> Square (Nothing, Just DoubleLetterScore)
+  --'2' -> Square (Nothing, Just DoubleWordScore)
+  --'3' -> Square (Nothing, Just TripleLetterScore)
+  --'4' -> Square (Nothing, Just TripleWordScore)
+  --_   -> Square (Just (Tile (c, Map.findWithDefault 1 c charToValue)), Nothing)
 
 startBoard :: Board
 startBoard = M.fromLists $ map (map rawCharToSquare) rawStartBoard
