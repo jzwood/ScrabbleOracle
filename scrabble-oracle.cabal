@@ -46,7 +46,6 @@ library
     , unordered-containers >=0.2.10.0
     , random == 1.1
     , text
-    , aeson
   default-language: Haskell2010
 
 executable scrabble-oracle-exe
