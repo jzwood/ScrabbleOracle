@@ -5,7 +5,6 @@ import AI.Oracle
 import Control.Monad.Loops
 import Data.List
 import Game.ScrabbleBoard
-import Game.ScrabbleGame
 import System.Random
 import qualified Data.Map as M
 import qualified Data.Matrix as Mat

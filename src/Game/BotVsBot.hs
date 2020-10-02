@@ -1,18 +1,15 @@
 module BotVsBot where
 
-
 import AI.Oracle
 import Control.Monad.Loops
 import Data.List
 import Game.ScrabbleBoard
-import Game.ScrabbleGame
 import System.Random
 import qualified Data.Map as M
 import qualified Data.Matrix as Mat
 
 
 type LetterBag = String
---oracle :: Board -> Rack -> IO [(String, Score, Coords)]
 
 applyPlayspot :: Board -> [(Char, TileCoordinate)] -> Board
 applyPlayspot = foldr (\ (c, Coordinate coord) b -> Mat.unsafeSet (Square (Just (Tile (c, charToValue M.! c)), Nothing)) coord b)
@@ -40,7 +37,6 @@ makePlay (letterBag, board, rack, runningScore) =
           (newLetterBag, newRack) = drawFromLetterBag letterBag rack board charCoords
           newScore = runningScore + score
       printPlay newBoard word score
-      --putStr . unlines $ Mat.toLists $ easyReadBoard newBoard
       return (newLetterBag, newBoard, newRack, newScore)
 
 printPlay :: Board -> String -> Score -> IO ()
@@ -57,7 +53,7 @@ startGame g =
     letterBag = initLetterBag g
     (p1Rack, letterBag1) = genericSplitAt 7 letterBag
     (p2Rack, letterBag2) = genericSplitAt 7 letterBag1
-  in makePlay (letterBag1, startBoard, p1Rack, 0)
+  in makePlay (letterBag1, botStartBoard, p1Rack, 0)
 
 
 playGame' :: IO ()

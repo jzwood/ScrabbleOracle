@@ -3,17 +3,11 @@ module Game.SingleBestPlay where
 import AI.Oracle
 import Data.List
 import Game.ScrabbleBoard
-import Game.ScrabbleGame
 import qualified Data.Map as M
 import qualified Data.Matrix as Mat
 
---parseForeignBoardRepresentation :: String -> Maybe Board
---parseForeignBoardRepresentation rawboard =
-  --where
-    --twoDimBoard = lines rawBoard
-
 rawBoardToBoard :: [String] -> Board
-rawBoardToBoard rawBoard = Mat.fromLists $ map (map rawCharToSquare) rawBoard
+rawBoardToBoard rawBoard = Mat.fromLists $ map (map charToSquare) rawBoard
 
 applyPlayspot :: Board -> [(Char, TileCoordinate)] -> Board
 applyPlayspot = foldr (\ (c, Coordinate coord) b -> Mat.unsafeSet (Square (Just (Tile (c, charToValue M.! c)), Nothing)) coord b)

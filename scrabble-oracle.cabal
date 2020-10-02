@@ -32,7 +32,6 @@ library
       AI.Playspots
       AI.Scoring
       Game.ScrabbleBoard
-      Game.ScrabbleGame
       Game.SingleBestPlay
       Lib.Trie
       TestData

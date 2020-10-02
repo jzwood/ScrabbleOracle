@@ -6,7 +6,6 @@ import qualified Data.Matrix as M
 import AI.Playspots
 import AI.Discovery
 import Game.ScrabbleBoard
-import Game.ScrabbleGame
 
 es = Square (Nothing, Nothing)
 s :: Char -> Score -> Square
