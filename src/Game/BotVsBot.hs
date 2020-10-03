@@ -1,4 +1,4 @@
-module BotVsBot where
+module Game.BotVsBot where
 
 import AI.Oracle
 import Control.Monad.Loops
@@ -70,5 +70,5 @@ playGame = do
   (l, b, r, s) <- iterateUntilM isGameOver makePlay start
   putStr $ "total combined score: " ++ show s
 
-main :: IO ()
-main = playGame
+--main :: IO ()
+--main = playGame
