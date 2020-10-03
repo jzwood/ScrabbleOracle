@@ -1,5 +1,6 @@
 module Game.ScrabbleBoard where
 
+import Control.Applicative
 import Data.Char
 import Data.List
 import Data.Matrix
@@ -186,6 +187,21 @@ charToSquare c = case c of
   '4' -> Square (Nothing, Just TripleWordScore)
   _   -> Square (Just (Tile (c, Map.findWithDefault 1 c charToValue)), Nothing)
 
+-- PRESENTATION UTILS
+
+printPlay :: Board -> String -> Score -> IO ()
+printPlay board word score = do
+    putStr $ genericReplicate 100 '\n'
+    putStr . stringifyBoard $ board
+    putChar '\n'
+    putStrLn $ "word: " ++ word
+    putStrLn $ "score: " ++ show score
+
+-- GAME UTILS
+
+applyPlayspot :: Board -> [(Char, TileCoordinate)] -> Board
+applyPlayspot = foldr (\ (c, Coordinate coord) b -> Mat.unsafeSet (Square (Just (Tile (c, charToValue Map.! c)), Nothing)) coord b)
+
 -- PARSING FOREIGN INPUT
 
 (.&&) :: (a -> Bool) -> (a -> Bool) -> a -> Bool
@@ -195,13 +211,35 @@ charToSquare c = case c of
 (.||) f1 f2 a = f1 a || f2 a
 
 parseBoard :: String -> Maybe Board
-parseBoard strBoard
-  | genericLength strBoard /= 15^2 = Nothing
-  | all isChar .&& (not . any isEmpty) $ strBoard = Just $
-      Mat.fromList 15 15 $ map charToSquare overlayBaseBoard
-  | otherwise = Nothing
+parseBoard strBoard =
+  if
+     is255 .&& all isChar .&& (not . any isEmpty) $ strBoard
+  then
+    Just $ Mat.fromList 15 15 $ map charToSquare overlayBaseBoard
+  else
+    Nothing
   where
+    is255 :: String -> Bool
+    is255 xs = genericLength xs == 15^2
+    isEmpty :: Char -> Bool
     isEmpty = (==' ')
+    isChar :: Char -> Bool
     isChar = isAlpha .&& isUpper .|| isEmpty
+    chooseChar :: Char -> Char -> Char
     chooseChar baseChar inputChar = if isEmpty inputChar then baseChar else inputChar
+    overlayBaseBoard :: String
     overlayBaseBoard = zipWith chooseChar strBoard (concat baseBoard)
+
+parseRack :: String -> Maybe Rack
+parseRack strRack =
+  if
+    genericLength strRack == 7 && all isChar strRack
+  then
+    Just strRack
+  else
+    Nothing
+  where
+    isChar = isAlpha .&& isUpper
+
+stringifyBoard :: Board -> String
+stringifyBoard board = unlines $ Mat.toLists $ easyReadBoard board

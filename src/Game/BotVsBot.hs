@@ -11,9 +11,6 @@ import qualified Data.Matrix as Mat
 
 type LetterBag = String
 
-applyPlayspot :: Board -> [(Char, TileCoordinate)] -> Board
-applyPlayspot = foldr (\ (c, Coordinate coord) b -> Mat.unsafeSet (Square (Just (Tile (c, charToValue M.! c)), Nothing)) coord b)
-
 drawFromLetterBag :: LetterBag -> Rack -> Board -> [(Char, TileCoordinate)] -> (LetterBag, Rack)
 drawFromLetterBag letterBag rack board charCoords = (newLetterBag, newRack)
   where
@@ -38,14 +35,6 @@ makePlay (letterBag, board, rack, runningScore) =
           newScore = runningScore + score
       printPlay newBoard word score
       return (newLetterBag, newBoard, newRack, newScore)
-
-printPlay :: Board -> String -> Score -> IO ()
-printPlay board word score = do
-    putStr $ genericReplicate 100 '\n'
-    putStr . unlines $ Mat.toLists $ easyReadBoard board
-    putChar '\n'
-    putStrLn $ "word: " ++ word
-    putStrLn $ "score: " ++ show score
 
 startGame :: StdGen -> IO (LetterBag, Board, Rack, Score)
 startGame g =
