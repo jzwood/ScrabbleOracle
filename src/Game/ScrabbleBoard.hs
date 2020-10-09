@@ -242,4 +242,9 @@ parseRack strRack =
     isChar = isAlpha .&& isUpper
 
 stringifyBoard :: Board -> String
-stringifyBoard board = unlines $ Mat.toLists $ easyReadBoard board
+stringifyBoard board =
+  horizontalBorder ++
+  (unlines . map verticalBorder $ Mat.toLists $ easyReadBoard board) ++
+  horizontalBorder
+    where horizontalBorder = '+' : replicate 15 '-' ++ "+\n"
+          verticalBorder row = '|' : row ++ "|"
