@@ -97,11 +97,33 @@ rawBoard3 =
 rack3 :: String
 rack3 = "FEASTTH"
 
+rawBoard4 :: [String]
+rawBoard4 =
+  [ "4__1___4___1__4"
+  , "_2___3___3___2_"
+  , "__2___1_1FOOT__"
+  , "1__2___1_L_ROBS"
+  , "____2____O2____"
+  , "_3___3_L_G___3_"
+  , "__1___1A1G__1__"
+  , "4__1___PRIM1__4"
+  , "__1___1_1N__1__"
+  , "_3___3___G___3_"
+  , "____2_____2____"
+  , "1__2___1___2___"
+  , "__2___1_1___2__"
+  , "_2___3___3___2_"
+  , "4__1___4___1__4"
+  ]
+
+rack4 :: String
+rack4 = "OZSNFRE"
+
 board :: Board
 board = rawBoardToBoard rawBoard3
 
 main :: IO ()
 main = do
-  (board, word, score) <- makeSinglePlay board rack3
+  (board, word, score) <- makeSinglePlay (rawBoardToBoard rawBoard4) rack4
   putStrLn . stringifyBoard $ board
   putStrLn $ "Points: " ++ show score
