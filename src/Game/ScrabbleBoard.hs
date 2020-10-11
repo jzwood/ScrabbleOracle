@@ -233,13 +233,11 @@ parseBoard strBoard =
 parseRack :: String -> Maybe Rack
 parseRack strRack =
   if
-    genericLength strRack == 7 && all isChar strRack
+    genericLength strRack == 7 && all (isAlpha .&& isUpper) strRack
   then
     Just strRack
   else
     Nothing
-  where
-    isChar = isAlpha .&& isUpper
 
 stringifyBoard :: Board -> String
 stringifyBoard board =

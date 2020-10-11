@@ -56,7 +56,7 @@ rack = "CREATES"
 rawBoard2 :: [String]
 rawBoard2 =
   [ "4__1___N___1__4"
-  , "JOULES_A   QAT_"
+  , "JOULES_A___QAT_"
   , "OY2__T1R1___B__"
   , "1__2_A_CONE2O_1"
   , "_RUDER___ADORN_"
@@ -78,7 +78,7 @@ rack2 = "OZETRIC"
 rawBoard3 :: [String]
 rawBoard3 =
   [ "4__B___N___1__4"
-  , "JOULES_A   QAT_"
+  , "JOULES_A___QAT_"
   , "OY2E_T1R1___B__"
   , "1__E_A_CONE2O_1"
   , "_RUDER___ADORN_"
