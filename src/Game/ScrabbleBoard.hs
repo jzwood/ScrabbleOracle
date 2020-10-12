@@ -27,6 +27,8 @@ type WordFragment = String
 type Rack = String
 type Score = Integer
 
+nullBoard :: Board
+nullBoard = Mat.fromList 0 0 []
 
 -- CONSTANTS
 
@@ -192,7 +194,7 @@ charToSquare c = case c of
 printPlay :: Board -> String -> Score -> IO ()
 printPlay board word score = do
     putStr $ genericReplicate 100 '\n'
-    putStr . stringifyBoard $ board
+    putStr . prettyPrint $ board
     putChar '\n'
     putStrLn $ "word: " ++ word
     putStrLn $ "score: " ++ show score
@@ -213,18 +215,20 @@ applyPlayspot = foldr (\ (c, Coordinate coord) b -> Mat.unsafeSet (Square (Just 
 parseBoard :: String -> Maybe Board
 parseBoard strBoard =
   if
-     is255 .&& all isChar .&& (not . any isEmpty) $ strBoard
+     isFullBoard .&& all (isChar .|| isBonus) .&& (not . all isEmpty) $ strBoard
   then
     Just $ Mat.fromList 15 15 $ map charToSquare overlayBaseBoard
   else
     Nothing
   where
-    is255 :: String -> Bool
-    is255 xs = genericLength xs == 15^2
+    isFullBoard :: String -> Bool
+    isFullBoard xs = genericLength xs == 15^2
     isEmpty :: Char -> Bool
-    isEmpty = (==' ')
+    isEmpty = (=='_')
     isChar :: Char -> Bool
     isChar = isAlpha .&& isUpper .|| isEmpty
+    isBonus :: Char -> Bool
+    isBonus = flip elem "1234"
     chooseChar :: Char -> Char -> Char
     chooseChar baseChar inputChar = if isEmpty inputChar then baseChar else inputChar
     overlayBaseBoard :: String
@@ -240,7 +244,10 @@ parseRack strRack =
     Nothing
 
 stringifyBoard :: Board -> String
-stringifyBoard board =
+stringifyBoard board = unlines . Mat.toLists $ easyReadBoard board
+
+prettyPrint :: Board -> String
+prettyPrint board =
   horizontalBorder ++
   (unlines . map verticalBorder $ Mat.toLists $ easyReadBoard board) ++
   horizontalBorder

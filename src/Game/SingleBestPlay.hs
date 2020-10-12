@@ -20,7 +20,3 @@ makeSinglePlay board rack = do
             charCoords = zip word coords
             newBoard = applyPlayspot board charCoords
         return (newBoard, word, score)
-
---ForeignFunctionStrBoardStrRackToMakePlay :: String -> String -> IO (String, String, Integer)
---ForeignFunctionStrBoardStrRackToMakePlay strBoard strRack = do
-  --(board, word, score) <- liftA2 makeSinglePlay (parseBoard strBoard) (parseRack strRack)

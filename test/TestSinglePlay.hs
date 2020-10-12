@@ -125,5 +125,5 @@ board = rawBoardToBoard rawBoard3
 main :: IO ()
 main = do
   (board, word, score) <- makeSinglePlay (rawBoardToBoard rawBoard4) rack4
-  putStrLn . stringifyBoard $ board
+  putStrLn . prettyPrint $ board
   putStrLn $ "Points: " ++ show score
