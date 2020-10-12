@@ -215,7 +215,7 @@ applyPlayspot = foldr (\ (c, Coordinate coord) b -> Mat.unsafeSet (Square (Just 
 parseBoard :: String -> Maybe Board
 parseBoard strBoard =
   if
-     isFullBoard .&& all (isChar .|| isBonus) .&& (not . all isEmpty) $ strBoard
+     isFullBoard .&& all (isAllowedChar .|| isNoChar) .&& (not . all isNoChar) $ strBoard
   then
     Just $ Mat.fromList 15 15 $ map charToSquare overlayBaseBoard
   else
@@ -223,14 +223,12 @@ parseBoard strBoard =
   where
     isFullBoard :: String -> Bool
     isFullBoard xs = genericLength xs == 15^2
-    isEmpty :: Char -> Bool
-    isEmpty = (=='_')
-    isChar :: Char -> Bool
-    isChar = isAlpha .&& isUpper .|| isEmpty
-    isBonus :: Char -> Bool
-    isBonus = flip elem "1234"
+    isNoChar :: Char -> Bool
+    isNoChar = (=='_')
+    isAllowedChar :: Char -> Bool
+    isAllowedChar = isAlpha .&& isUpper
     chooseChar :: Char -> Char -> Char
-    chooseChar baseChar inputChar = if isEmpty inputChar then baseChar else inputChar
+    chooseChar inputChar baseChar = if isNoChar inputChar then baseChar else inputChar
     overlayBaseBoard :: String
     overlayBaseBoard = zipWith chooseChar strBoard (concat baseBoard)
 
