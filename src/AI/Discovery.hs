@@ -15,7 +15,7 @@ import Lib.Trie (Trie)
 import qualified Lib.Trie as T
 import Game.ScrabbleBoard
 
-dictPath = "dicts/collins_scrabble_words2019_clean.txt"
+dictPath = "dicts/scrabble_words.txt"
 
 isInDictionary :: IO (String -> Bool)
 isInDictionary = do
